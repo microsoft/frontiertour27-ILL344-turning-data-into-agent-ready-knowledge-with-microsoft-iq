@@ -1,13 +1,15 @@
-aiohttp>=3.13.5
-agent-framework-core>=1.10.0
-agent-framework-openai>=1.10.0
+aiohttp==3.14.3
+# Don't upgrade to agent-framework-core 1.23+/mcp 2.x until fixed: it skips the KB's MCP tool (taskSupport "optional")
+# https://github.com/microsoft/agent-framework/issues/9675
+agent-framework-core==1.22.0
+agent-framework-openai==1.17.0
 azure-identity==1.25.3
 azure-search-documents==12.1.0b2
 azure-storage-blob==12.30.0
 azure-storage-file-datalake==12.23.0
 ipykernel==7.2.0
-mcp>=1.24.0,<2
-microsoft-fabric-api>=0.1.0b20,<0.2
-pyarrow>=23,<24
+mcp==1.30.0
+microsoft-fabric-api==0.1.0b24
+pyarrow==23.0.1
 python-dotenv==1.2.2
 requests==2.33.0
