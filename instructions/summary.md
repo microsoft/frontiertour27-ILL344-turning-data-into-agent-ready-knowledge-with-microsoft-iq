@@ -1,7 +1,28 @@
 ===
 # Summary
 
-You've completed the lab on building agentic knowledge bases with Foundry IQ (Azure AI Search) and multiple source types. Through 4 progressive notebooks, you built a multi-source document-backed KB, added Fabric IQ and Work IQ, and combined Work IQ with Fabric IQ.
+Across five exercises, you investigated Caldova supplier questions with Foundry IQ, added Fabric IQ and Work IQ, and connected a Microsoft Agent Framework agent through MCP. You inspected the original data, not just generated answers.
+
+## What changed at each step
+
+| Part | What you built | How you checked it |
+| --- | --- | --- |
+| 1 | A policy file source, two indexed sources, and knowledge bases with answer synthesis | Compared a shipment claim with its PDF and citation metadata |
+| 2 | A knowledge base adding Fabric IQ to the Part 1 sources | Traced a substance-to-product relationship through Fabric tables and `fabricRawData` |
+| 3 | A knowledge base adding Work IQ to the Part 1 sources | Compared recent Outlook messages with approved sourcing commitments |
+| 4 | A five-source briefing knowledge base | Matched claims to sources and challenged an unsupported relationship |
+| 5 | An extractive knowledge base over the Part 1 sources and an agent using MCP | Inspected the retrieval tool call and compared the agent's conclusion with the original evidence |
+
+## Explain it back
+
+Before you finish, explain these in your own words:
+
+1. Why is a knowledge base different from a search index or a knowledge source?
+2. Why does an email about a possible delay not replace an approved purchase order?
+3. What relationship did Fabric establish that the invoice alone could not?
+4. Which component generated the final answer in Part 1, and which did so in Part 5?
+
+If you cannot point to supporting evidence, treat the claim as unverified. A knowledge base having a source configured is not proof that the source supported a particular answer.
 
 ## Continue learning
 
@@ -19,8 +40,8 @@ Here are some ways to apply what you've learned:
 
 **Customize retrieval behavior** - Adjust reasoning effort levels, configure custom retrieval and answer instructions for specific sources.
 
-**Integrate with your data** - Replace the sample HR and health insurance indexes with your own enterprise content.
+**Integrate with your data** - Replace the sample Caldova policy and procurement records with enterprise content you are authorized to use.
 
-**Build a conversational interface** - Extend the Foundry Agent with additional tools and a chat UI for end users.
+**Build a conversational interface** - Extend the notebook's Microsoft Agent Framework agent with additional tools and a chat UI for end users.
 
 The patterns you explored in this lab form the foundation for building custom copilots, enterprise assistants, and intelligent knowledge applications that combine indexed enterprise data with structured and workplace context.

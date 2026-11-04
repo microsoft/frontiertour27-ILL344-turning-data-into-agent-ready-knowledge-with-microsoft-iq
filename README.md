@@ -20,7 +20,7 @@ If you're following along during a live session:
 
 1. Open the lab environment and sign in with the provided credentials.
 2. Follow the setup guidance in [`instructions/overview.md`](instructions/overview.md).
-3. Open [`src/notebooks/`](src/notebooks/), start with [`part1-standard-foundry-iq-kb.ipynb`](src/notebooks/part1-standard-foundry-iq-kb.ipynb), and work through all five notebooks sequentially.
+3. Keep the [guided exercises](instructions/overview.md#exercise-1-investigate-a-shipment-with-document-evidence) open alongside [`src/notebooks/`](src/notebooks/). In each exercise, inspect the source in the browser, run the notebook, and verify the evidence before continuing.
 
 #### On your own
 
@@ -28,7 +28,7 @@ If you're learning at your own pace:
 
 1. Clone this repository.
 2. Provision the required resources by following the [self-deployment guide](deploy_yourself.md).
-3. Follow [`instructions/overview.md`](instructions/overview.md), then work through all five notebooks in [`src/notebooks/`](src/notebooks/) sequentially.
+3. Follow the exercises in [`instructions/overview.md`](instructions/overview.md#exercise-1-investigate-a-shipment-with-document-evidence) alongside all five notebooks in [`src/notebooks/`](src/notebooks/). Use your own deployment settings and note the differences for sample emails in the guide.
 
 ### 🎯 Learning outcomes
 
