@@ -5,24 +5,13 @@ Across five exercises, you investigated Caldova supplier questions with Foundry 
 
 ## What changed at each step
 
-| Part | What you built | How you checked it |
+| Part | What you built | What you explored |
 | --- | --- | --- |
 | 1 | A policy file source, two indexed sources, and knowledge bases with answer synthesis | Compared a shipment claim with its PDF and citation metadata |
 | 2 | A knowledge base adding Fabric IQ to the Part 1 sources | Traced a substance-to-product relationship through Fabric tables and `fabricRawData` |
 | 3 | A knowledge base adding Work IQ to the Part 1 sources | Compared recent Outlook messages with approved sourcing commitments |
-| 4 | A five-source briefing knowledge base | Matched claims to sources and challenged an unsupported relationship |
+| 4 | A five-source briefing knowledge base | Policy, sourcing, workplace, and structured evidence in one answer |
 | 5 | An extractive knowledge base over the Part 1 sources and an agent using MCP | Inspected the retrieval tool call and compared the agent's conclusion with the original evidence |
-
-## Review your results
-
-Before you finish, revisit these results:
-
-1. In Part 1, find the index connected by each indexed knowledge source and the knowledge base that brings those sources together.
-2. Compare the delivery email with the purchase order and check that your answer preserves their different roles.
-3. Trace the substance-to-product relationship in Fabric and match it to the returned structured evidence.
-4. Compare the answer-synthesis knowledge base in Part 1 with the extractive knowledge base and agent model in Part 5.
-
-If you cannot point to supporting evidence, treat the claim as unverified. A knowledge base having a source configured is not proof that the source supported a particular answer.
 
 ## Continue learning
 
