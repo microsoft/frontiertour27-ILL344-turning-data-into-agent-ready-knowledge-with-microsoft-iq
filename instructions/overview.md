@@ -40,7 +40,7 @@ Through five exercises, you will build Foundry IQ knowledge bases in Azure AI Se
 
 ### How to work through the lab
 
-For each exercise, **inspect the source in the browser, predict what it can answer, run the notebook, and verify one claim against the source**. Keep this guide open alongside Visual Studio Code. Do not select **Run All** and skip the checkpoints.
+For each exercise, **inspect the source in the browser, run the notebook, and compare the answer with the source**. Keep this guide open alongside Visual Studio Code. Do not select **Run All** and skip the checkpoints.
 
 The browser makes the source data and created resources visible. The notebooks create the knowledge sources and knowledge bases and make authenticated retrieval calls. **You do not need to recreate resources in the portals.**
 
@@ -121,7 +121,7 @@ Confirm that the search indexes have been created successfully:
    - **supplier-evidence** - Should show a nonzero document count
    - **sourcing-documents** - Should show a nonzero document count
 
-If your indexes are present and populated, keep this browser tab open. You will inspect their contents in Exercise 1. If either index is missing or empty, ask a proctor before continuing. Do not run the restoration utility in the hosted lab.
+If your indexes are present and populated, keep this browser tab open. You will inspect their contents in Exercise 1. If either index is missing or empty, ask a proctor before continuing.
 
 ### Work through the Jupyter notebooks
 
@@ -130,32 +130,26 @@ If your indexes are present and populated, keep this browser tab open. You will 
 3. For each notebook, follow its instructions **from top to bottom** and run the corresponding code cells **in sequence**. Wait for each cell to finish before starting the next. Use the same Python environment for all five notebooks.
 4. For browser sign-in prompts in Parts 2, 3, and 4, use the lab credentials above. If a sign-in window is hidden, minimize other windows **inside the virtual machine**. Keep the outer browser hosting Skillable open.
 
-Complete the notebooks in this order, following the matching browser exercise below. After completing one notebook and its checkpoint, continue to the next notebook in the list.
-
-| Order | Notebook in **src/notebooks/** | Topic |
-| --- | --- | --- |
-| 1 | [part1-standard-foundry-iq-kb.ipynb](../src/notebooks/part1-standard-foundry-iq-kb.ipynb) | Multi-source search indexes and an uploaded policy file |
-| 2 | [part2-fabric-iq-to-kb.ipynb](../src/notebooks/part2-fabric-iq-to-kb.ipynb) | Fabric IQ through an ontology knowledge source |
-| 3 | [part3-work-iq-to-kb.ipynb](../src/notebooks/part3-work-iq-to-kb.ipynb) | Work IQ as a first-party source using your signed-in identity |
-| 4 | [part4-work-iq-fabric-iq-to-kb.ipynb](../src/notebooks/part4-work-iq-fabric-iq-to-kb.ipynb) | Work IQ and Fabric IQ in a combined knowledge base |
-| 5 | [part5-agent-framework-mcp.ipynb](../src/notebooks/part5-agent-framework-mcp.ipynb) | Microsoft Agent Framework and an extractive knowledge base through MCP |
+Each exercise page identifies the notebook to open and the browser activities to complete alongside it. Follow the five exercise pages in order.
 
 > [!TIP]
 > Part 1 creates the policy file source that later notebooks reuse. Parts 2 and 3 each add a different source to the Part 1 sources. Part 4 combines them. Part 5 deliberately uses only the Part 1 sources to compare knowledge-base synthesis with agent synthesis.
 
-===
-# Exercise 1: Investigate a shipment with document evidence
+Select **Next** to start **Exercise 1: Build Foundry IQ knowledge bases with agentic retrieval**. Outside Skillable, continue to the exercise below.
 
-**Why this matters:** A temperature excursion is not enough to decide whether goods can be distributed. You need the shipment evidence and disposition decision, not a plausible-sounding answer.
+===
+# Exercise 1: Build Foundry IQ knowledge bases with agentic retrieval
+
+Caldova's distribution team needs to decide whether goods can be distributed after a temperature excursion, a period of high temperature during shipment. You will query a Foundry IQ knowledge base with indexed documents to investigate what happened and find the final distribution decision.
 
 ## Inspect the documents before running code
 
-1. In File Explorer, open **Desktop > aitour-ILL344 > data > caldova > pdfs**. Open **CAL-POL-PUR-001.pdf** in Microsoft Edge. Find one approval or escalation rule. This is the policy you will upload, not an already indexed shipment record.
-2. In your Azure portal tab, return to **Search management > Indexes** and open **supplier-evidence**.
-3. Open **Search explorer**. In the search text box, enter +++SHIP-VC-1026-BOS-FRA+++ and select **Search**. Inspect a result's **chunk**, **title**, **blob_path**, and page-number fields.
-4. Open **TL-VCL-1026.pdf** and **EXC-VC-1026-04.pdf** from the same PDF folder. Find the temperature record and the disposition evidence.
+1. In your Azure portal tab, return to **Search management > Indexes** and open **supplier-evidence**.
+2. Open **Search explorer**. In the search text box, enter +++SHIP-VC-1026-BOS-FRA+++ and select **Search**. Inspect a result's **chunk**, **title**, **blob_path**, and page-number fields.
+3. In File Explorer, open **Desktop > aitour-ILL344 > data > caldova > pdfs**. Open **TL-VCL-1026.pdf** and **EXC-VC-1026-04.pdf** in Microsoft Edge. Find the temperature record and the disposition evidence.
+4. Finally, open **CAL-POL-PUR-001.pdf** from the same folder and find an approval or escalation rule. Unlike the shipment records, this policy is not in either pre-created index. The notebook will introduce a file knowledge source and upload the policy directly.
 
-**Predict:** Which source should explain the excursion, and which should define purchasing controls? Why would the purchasing policy alone be insufficient?
+**Compare the records:** Follow the shipment identifier from the temperature logger to the investigation report. Find both the initial quarantine status and the final disposition. Keep these records open to check whether the generated answer distinguishes the two stages.
 
 ## Build and query the knowledge bases
 
@@ -169,17 +163,45 @@ Then work through **Steps 6 to 9** to connect both existing indexes and create *
 2. Find **caldova-policy-knowledge-base** and **caldova-supply-chain-knowledge-base**. Inspect their knowledge sources. The first uses the policy file. The second uses that file plus **supplier-evidence-knowledge-source** and **sourcing-documents-knowledge-source**.
 3. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A `blob_path` is citation metadata and might not be a directly accessible link.
 
-> [!NOTE]
-> Portal support for preview knowledge source types and models can vary. Inspect only, and do not save changes or recreate a notebook-created knowledge base. If the portal cannot display its configuration, compare the notebook's **Create the knowledge base** cell with the printed activity and references instead. Continue querying from the notebook.
+**Checkpoint:** In the notebook answer, find the distribution conclusion and its supporting reference. Use the reference's title and page numbers to locate the final disposition in the investigation PDF. Check that the answer distinguishes the initial quarantine from the final decision.
 
-**Checkpoint:** Explain why an index, a knowledge source, and a knowledge base are different. Point to the reference supporting your distribution conclusion. A successful cell alone does not establish that the answer is supported.
+## Optional: Query the knowledge base in the GitHub Copilot app
 
-**Optional, after the checkpoint:** Try the notebook's GitHub Copilot app bonus or change `question` to one of the additional sample questions. If you change a question, rerun its query cell and the following activity and reference cells.
+After completing the checkpoint, you can query the same knowledge base from a chat client instead of Python. The notebook provides the MCP URL. Follow the app instructions here, not in the notebook.
+
+### Get the MCP URL
+
+In **part1-standard-foundry-iq-kb.ipynb**, run the cell under **Optional: Get the knowledge base MCP URL**. Keep the printed URL available.
+
+### Sign in to GitHub and open the app
+
+1. In the browser, sign in through +++https://github.com/enterprises/skillable-events/sso+++. This uses the special GitHub account created for your lab environment, not your personal GitHub account.
+2. Open the **GitHub Copilot** app from the desktop shortcut.
+3. Select **Sign in to GitHub**. If an installation process starts, wait for it to complete before continuing with the GitHub sign-in process.
+4. When the browser opens, use the lab GitHub account, paste the device code from the app, and select **Authorize GitHub**.
+5. Return to the app. You do not need to connect a repository. Select **Continue** on the repository selection screen and **Finish** on the preferences screen.
+
+### Add the knowledge base MCP server
+
+1. Select **Customize** in the sidebar, then select the **MCP** tab.
+2. Open the **Add** menu and select **MCP server**.
+3. Enter these values:
+   - **Server name**: +++caldova-kb+++
+   - **Server type**: **HTTP**, not Local/SSE
+   - **URL**: the complete URL printed by the notebook
+   - **Header name**: +++api-key+++
+   - **Header value**: the value of **AZURE_SEARCH_ADMIN_KEY** from your lab `.env` file
+4. Select **Add server** and confirm that **caldova-kb** appears in the server list.
+5. Start a new chat by selecting **+** next to **Chats** in the sidebar and ask:
+
+   +++Compare Summit Dose's documented CALD-201 commitments across its Caldova RFP response, agreement amendment, and purchase order.+++
+
+Whether you try the optional activity or skip it, select **Next** to continue to **Exercise 2: Add structured data from Fabric IQ** once you have completed the notebook and checkpoint.
 
 ===
-# Exercise 2: Follow a product relationship in Fabric IQ
+# Exercise 2: Add structured data from Fabric IQ
 
-**Why this matters:** An invoice identifies a lot and substance. It does not necessarily establish which medicinal product uses that substance. You will combine document evidence with structured relationships instead of asking the model to guess the connection.
+Caldova's procurement team has found Meridian API Works invoice and quality evidence for lot **AUR-API-7**. The documents identify the lot and its active substance, but the team also needs to find which medicinal product uses that substance. You will add a Fabric IQ ontology knowledge source to connect those document facts with structured product relationships.
 
 ## Explore the Fabric data
 
@@ -188,7 +210,7 @@ Then work through **Steps 6 to 9** to connect both existing indexes and create *
 3. Open **CaldovaSupplierAnalytics**. Under **Tables**, preview **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**. Find **SUB-001** in the substance table and follow its ID through the linking table to a product.
 4. Return to the workspace and open **CaldovaMedicinalProductOntology**. Inspect **MedicinalProduct**, **ActiveSubstance**, and **Manufacturer**, and the **contains** and **manufactures** relationships. The ontology gives business meaning to the table relationships.
 
-**Predict:** What can Fabric establish that the invoice cannot? Can this ontology, by itself, prove that a particular shipment passed a quality check?
+**Trace the relationship:** Use **ProductActiveSubstance** to connect **SUB-001** to a medicinal product. Keep that relationship available to compare with the retrieval result.
 
 ## Add Fabric IQ and query
 
@@ -201,12 +223,14 @@ Allow about 40 seconds for retrieval. Run the activity and reference cells, then
 1. Find a `searchIndex` reference for the **AUR-API-7** lot evidence and a `fabricOntology` reference for the substance-to-product relationship.
 2. Compare the product in `fabricRawData` with the **SUB-001** relationship you inspected in Fabric.
 
-**Checkpoint:** Name one fact supported by a document and one relationship supported by Fabric IQ. If the answer claims a relationship that the structured results do not contain, flag it as unsupported rather than accepting it.
+**Checkpoint:** Match the lot claim to its indexed document reference, then match the product claim to `fabricRawData` and the table relationship you inspected. Flag any claimed relationship that the structured results do not contain.
+
+Once you have completed the notebook and checkpoint, select **Next** to continue to **Exercise 3: Add workplace context from Work IQ**.
 
 ===
-# Exercise 3: Compare recent email with approved commitments
+# Exercise 3: Add workplace context from Work IQ
 
-**Why this matters:** An approved commitment describes what should happen. Recent workplace messages describe what is happening now. Work IQ adds the latter using the signed-in user's Microsoft 365 permissions.
+Caldova's supply team has recent emails about Summit Dose equipment mapping, subcontractor approval, and delivery planning for **CALD-201**. You will add a Work IQ knowledge source to compare these updates with approved sourcing commitments, using the signed-in user's Microsoft 365 permissions.
 
 ## Read the source emails first
 
@@ -218,7 +242,7 @@ Allow about 40 seconds for retrieval. Run the activity and reference cells, then
 3. Identify an action owner, a deadline, and a decision that is still open. Keep the emails available for comparison with the answer.
 4. From the lab's PDF folder, open **PO-CAL-SUM-2026-1108.pdf** and compare its delivery commitment with the delivery email.
 
-**Predict:** Does the email's proposed **12 May** release replace the approved **30 April** delivery commitment? Which source should support each date?
+**Compare the dates:** Locate the proposed **12 May** release in the email and the approved **30 April** delivery commitment in the purchase order. Keep the two records available to check how the answer describes their different roles.
 
 > [!NOTE]
 > These are fictional scenario dates, not deadlines relative to today's date. If the hosted mailbox is empty or the messages are missing, ask a proctor. Do not seed messages yourself or switch to your personal mailbox. If you self-deployed, use relevant messages you are authorized to access and adapt the question. You will not be able to verify these three sample messages unless they have been seeded.
@@ -235,16 +259,18 @@ Allow 1 to 2 minutes for retrieval. While waiting, compare the emails with the p
 2. In a `workIQ` reference, find a supporting link in the text or a citation's `targetLink`. Open it in the browser and compare an owner, deadline, or decision with the original email. If a link cannot open, find the message by subject in Outlook.
 3. Find a separate `searchIndex` reference supporting an approved sourcing commitment.
 
-**Checkpoint:** Explain why the email is a planning update, not an amendment to the purchase order. Work IQ is querying accessible workplace context at runtime, not uploading your entire mailbox to either document index.
+**Checkpoint:** Check that the answer labels the email as a planning update and preserves the purchase order's approved commitment. Match each date to its supporting reference. Work IQ is querying accessible workplace context at runtime, not uploading your entire mailbox to either document index.
+
+Once you have completed the notebook and checkpoint, select **Next** to continue to **Exercise 4: Combine Work IQ and Fabric IQ**.
 
 ===
-# Exercise 4: Build an evidence-backed briefing
+# Exercise 4: Combine Work IQ and Fabric IQ
 
-**Why this matters:** One answer can combine several systems without treating them as interchangeable. Your briefing must distinguish policy, approved commitments, structured relationships, and current discussion.
+Caldova's executive team needs one **CALD-201** supply-chain briefing that brings together purchasing controls, approved Summit Dose commitments, current actions, and active-substance manufacturers. You will combine the existing document sources with Work IQ and Fabric IQ in one knowledge base, then check which source supports each part of the briefing.
 
-## Predict the source for each claim
+## Match briefing claims to sources
 
-Before running the query, choose the source you expect to support each row. After retrieval, add a reference identifier or source title from your own result in your notes.
+Use this table to track the role of each source. After retrieval, add a reference identifier or source title from your own result in your notes.
 
 | Briefing claim | Expected source | Evidence you found |
 | --- | --- | --- |
@@ -263,18 +289,20 @@ Allow 1 to 2 minutes for retrieval. Run the activity and reference cells and com
 
 ## Inspect and verify
 
-1. Return to **Agentic retrieval > Knowledge bases** in the Azure portal and refresh. Inspect **caldova-supply-chain-briefing-knowledge-base** and its five configured sources. Use the notebook configuration if the portal cannot display a preview source.
+1. Return to **Agentic retrieval > Knowledge bases** in the Azure portal and refresh. Inspect **caldova-supply-chain-briefing-knowledge-base** and its five configured sources.
 2. Complete the evidence column above from the returned references, not from memory. If a claim or its supporting reference is absent, mark it **not returned** rather than filling it in from expectation.
 3. Reopen one supporting email in Outlook and compare one structured claim with the Fabric tables. Check that the briefing preserves the different roles of these sources.
 
-**Checkpoint:** Challenge this claim: *"Because Summit Dose is discussed in the CALD-201 emails, Fabric proves that it manufactures Caldovexine."* Does the returned ontology evidence actually establish that link? If not, explain what is missing. A grounded answer should acknowledge the gap.
+**Checkpoint:** Compare any claim that Summit Dose manufactures Caldovexine with the returned ontology evidence. If that relationship is absent, mark the claim as unsupported. Mentioning a supplier in an email is not evidence of a manufacturing relationship in Fabric.
+
+Once you have completed the notebook and checkpoint, select **Next** to continue to **Exercise 5: Build an agent with Microsoft Agent Framework**.
 
 ===
-# Exercise 5: Let an agent reason over retrieved evidence
+# Exercise 5: Build an agent with Microsoft Agent Framework
 
-**Why this matters:** In Parts 1 to 4, the knowledge base synthesized the answer. Now an extractive knowledge base returns evidence and the agent's model produces the answer. You will revisit the Part 1 shipment question to compare these two responsibilities.
+Caldova's supply-chain team wants an agent that can use retrieved evidence to answer the shipment question from Part 1. You will connect Microsoft Agent Framework to an extractive knowledge base through MCP. Unlike Parts 1 to 4, the knowledge base will return evidence without synthesizing an answer, and the agent's model will produce the response.
 
-## Predict what changes
+## Compare the configurations
 
 Open **src/notebooks/part5-agent-framework-mcp.ipynb** and compare **Step 3: Create an extractive knowledge base** with Part 1's knowledge base definition.
 
@@ -288,10 +316,10 @@ This agent runs inside the notebook. You do not deploy a Foundry Hosted Agent or
 
 ## Verify the agent's work
 
-1. In the Azure portal, refresh **Agentic retrieval > Knowledge bases** and find **caldova-supply-chain-minimal-knowledge-base**. Compare its sources and output mode with **caldova-supply-chain-knowledge-base** from Part 1. If the portal cannot display the configuration, use the two notebook definitions.
+1. In the Azure portal, refresh **Agentic retrieval > Knowledge bases** and find **caldova-supply-chain-minimal-knowledge-base**. Compare its sources and output mode with **caldova-supply-chain-knowledge-base** from Part 1.
 2. In the notebook's tool-call table, find the retrieval call and inspect the query arguments. If no retrieval call is shown, do not assume the answer used the knowledge base.
 3. Compare the answer's shipment conclusion with Part 1 and with **EXC-VC-1026-04.pdf** in the browser. Wording may differ. The evidence and distribution conclusion should agree.
 
-**Checkpoint:** Explain the path **question > agent > MCP retrieval > document evidence > agent answer**. Which component synthesizes the final answer now? Why can this agent not answer a question requiring your current mailbox or the Fabric ontology?
+**Checkpoint:** Follow the retrieval query in the tool-call table back to the three configured document sources, then check the agent's distribution conclusion against the investigation PDF. Compare the extractive knowledge base definition with the agent's model configuration to see where answer generation now happens.
 
 Once you have completed all five notebooks and checkpoints, select **Next** in Skillable to review the summary and next steps. Outside Skillable, open the [lab summary](summary.md).

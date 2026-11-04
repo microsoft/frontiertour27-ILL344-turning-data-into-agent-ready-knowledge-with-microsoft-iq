@@ -7,7 +7,7 @@ These instructions are for participants of the **instructor-led lab** **ILL344: 
 
 You are a Caldova procurement analyst investigating supplier risk. Build Foundry IQ knowledge bases over policy and document evidence, add Fabric IQ relationships and Work IQ workplace context, then connect a Microsoft Agent Framework agent. At every stage, verify which source supports the answer.
 
-Follow the [guided lab instructions](overview.md). Each exercise follows **inspect in the browser > predict > run the notebook > verify the evidence**. The browser activities are part of the lab, not just environment setup.
+Follow the [guided lab instructions](overview.md). Each exercise follows **inspect in the browser > run the notebook > verify the evidence**. The browser activities are part of the lab, not just environment setup.
 
 ## Prerequisites
 
@@ -27,11 +27,11 @@ Start with the [environment setup](overview.md#getting-started), then keep the g
 
 | Exercise | Browser activity | Notebook |
 | --- | --- | --- |
-| [1. Investigate a shipment](overview.md#exercise-1-investigate-a-shipment-with-document-evidence) | Inspect PDFs, Search explorer results, and created knowledge bases | [Part 1](../src/notebooks/part1-standard-foundry-iq-kb.ipynb) |
-| [2. Follow a product relationship](overview.md#exercise-2-follow-a-product-relationship-in-fabric-iq) | Explore lakehouse tables and the Fabric ontology | [Part 2](../src/notebooks/part2-fabric-iq-to-kb.ipynb) |
-| [3. Compare email with commitments](overview.md#exercise-3-compare-recent-email-with-approved-commitments) | Read the seeded Outlook emails and an approved purchase order | [Part 3](../src/notebooks/part3-work-iq-to-kb.ipynb) |
-| [4. Build a briefing](overview.md#exercise-4-build-an-evidence-backed-briefing) | Inspect the combined knowledge base and verify claims in source systems | [Part 4](../src/notebooks/part4-work-iq-fabric-iq-to-kb.ipynb) |
-| [5. Connect an agent](overview.md#exercise-5-let-an-agent-reason-over-retrieved-evidence) | Compare knowledge base configurations and check the shipment evidence | [Part 5](../src/notebooks/part5-agent-framework-mcp.ipynb) |
+| [1. Foundry IQ knowledge bases](overview.md#exercise-1-build-foundry-iq-knowledge-bases-with-agentic-retrieval) | Inspect PDFs, Search explorer results, and created knowledge bases | [part1-standard-foundry-iq-kb.ipynb](../src/notebooks/part1-standard-foundry-iq-kb.ipynb) |
+| [2. Fabric IQ](overview.md#exercise-2-add-structured-data-from-fabric-iq) | Explore lakehouse tables and the Fabric ontology | [part2-fabric-iq-to-kb.ipynb](../src/notebooks/part2-fabric-iq-to-kb.ipynb) |
+| [3. Work IQ](overview.md#exercise-3-add-workplace-context-from-work-iq) | Read the seeded Outlook emails and an approved purchase order | [part3-work-iq-to-kb.ipynb](../src/notebooks/part3-work-iq-to-kb.ipynb) |
+| [4. Work IQ and Fabric IQ](overview.md#exercise-4-combine-work-iq-and-fabric-iq) | Inspect the combined knowledge base and verify claims in source systems | [part4-work-iq-fabric-iq-to-kb.ipynb](../src/notebooks/part4-work-iq-fabric-iq-to-kb.ipynb) |
+| [5. Microsoft Agent Framework](overview.md#exercise-5-build-an-agent-with-microsoft-agent-framework) | Compare knowledge base configurations and check the shipment evidence | [part5-agent-framework-mcp.ipynb](../src/notebooks/part5-agent-framework-mcp.ipynb) |
 
 Complete Part 1 before the later notebooks, which reuse its policy file source. After all five exercises, continue to the [summary](summary.md).
 

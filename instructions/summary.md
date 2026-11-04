@@ -13,14 +13,14 @@ Across five exercises, you investigated Caldova supplier questions with Foundry 
 | 4 | A five-source briefing knowledge base | Matched claims to sources and challenged an unsupported relationship |
 | 5 | An extractive knowledge base over the Part 1 sources and an agent using MCP | Inspected the retrieval tool call and compared the agent's conclusion with the original evidence |
 
-## Explain it back
+## Review your results
 
-Before you finish, explain these in your own words:
+Before you finish, revisit these results:
 
-1. Why is a knowledge base different from a search index or a knowledge source?
-2. Why does an email about a possible delay not replace an approved purchase order?
-3. What relationship did Fabric establish that the invoice alone could not?
-4. Which component generated the final answer in Part 1, and which did so in Part 5?
+1. In Part 1, find the index connected by each indexed knowledge source and the knowledge base that brings those sources together.
+2. Compare the delivery email with the purchase order and check that your answer preserves their different roles.
+3. Trace the substance-to-product relationship in Fabric and match it to the returned structured evidence.
+4. Compare the answer-synthesis knowledge base in Part 1 with the extractive knowledge base and agent model in Part 5.
 
 If you cannot point to supporting evidence, treat the claim as unverified. A knowledge base having a source configured is not proof that the source supported a particular answer.
 
