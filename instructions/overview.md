@@ -30,14 +30,6 @@ Your job is not just to get an answer. It is to show **which evidence supports e
 
 Through five exercises, you will build Foundry IQ knowledge bases in Azure AI Search, add Fabric IQ and Work IQ, and connect an agent through Model Context Protocol (MCP).
 
-| Part | Business question | What you add |
-| --- | --- | --- |
-| 1 | Can a temperature-exposed shipment be distributed? | Purchasing policy and two document indexes |
-| 2 | Which product uses the substance in an invoiced lot? | Structured relationships from Fabric IQ |
-| 3 | What changed since the approved sourcing commitments? | Your lab mailbox through Work IQ |
-| 4 | Can we produce one briefing without mixing up the evidence? | A combined five-source knowledge base |
-| 5 | Can an agent use the evidence to answer the shipment question? | Microsoft Agent Framework over an extractive knowledge base |
-
 ### How to work through the lab
 
 For each exercise, **inspect the source in the browser, run the notebook, and compare the answer with the source**. Keep this guide open alongside Visual Studio Code. Do not select **Run All** and skip the checkpoints.
@@ -123,18 +115,6 @@ Confirm that the search indexes have been created successfully:
 
 If your indexes are present and populated, keep this browser tab open. You will inspect their contents in Exercise 1. If either index is missing or empty, ask a proctor before continuing.
 
-### Work through the Jupyter notebooks
-
-1. In Visual Studio Code, open **src > notebooks > part1-standard-foundry-iq-kb.ipynb**.
-2. Select **Select Kernel > Python Environments**, then choose the environment at **.venv\Scripts\python.exe**.
-3. For each notebook, follow its instructions **from top to bottom** and run the corresponding code cells **in sequence**. Wait for each cell to finish before starting the next. Use the same Python environment for all five notebooks.
-4. For browser sign-in prompts in Parts 2, 3, and 4, use the lab credentials above. If a sign-in window is hidden, minimize other windows **inside the virtual machine**. Keep the outer browser hosting Skillable open.
-
-Each exercise page identifies the notebook to open and the browser activities to complete alongside it. Follow the five exercise pages in order.
-
-> [!TIP]
-> Part 1 creates the policy file source that later notebooks reuse. Parts 2 and 3 each add a different source to the Part 1 sources. Part 4 combines them. Part 5 deliberately uses only the Part 1 sources to compare knowledge-base synthesis with agent synthesis.
-
 Select **Next** to start **Exercise 1: Build Foundry IQ knowledge bases with agentic retrieval**. Outside Skillable, continue to the exercise below.
 
 ===
@@ -153,7 +133,11 @@ Caldova's distribution team needs to decide whether goods can be distributed aft
 
 ## Build and query the knowledge bases
 
-In **part1-standard-foundry-iq-kb.ipynb**, work through **Steps 1 to 5** to upload the policy and query the policy-only knowledge base. Allow about 40 seconds for file ingestion.
+1. In Visual Studio Code, open **src > notebooks > part1-standard-foundry-iq-kb.ipynb**.
+2. Select **Select Kernel > Python Environments**, then choose the environment at **.venv\Scripts\python.exe**. Use this same Python environment in the remaining exercises.
+3. Follow the notebook's instructions **from top to bottom** and run the corresponding code cells **in sequence**. Wait for each cell to finish before starting the next.
+
+Work through **Steps 1 to 5** to upload the policy and query the policy-only knowledge base. Allow about 40 seconds for file ingestion.
 
 Then work through **Steps 6 to 9** to connect both existing indexes and create **caldova-supply-chain-knowledge-base**. Run the shipment query, then the **activity log**, **references**, and **Source Hunt** sections.
 
@@ -215,6 +199,8 @@ Caldova's procurement team has found Meridian API Works invoice and quality evid
 ## Add Fabric IQ and query
 
 Open **src/notebooks/part2-fabric-iq-to-kb.ipynb**. Run **Steps 1 to 5**, signing in with the same lab account when prompted. This creates **caldova-fabric-knowledge-base** over the Part 1 sources plus Fabric IQ.
+
+If the browser sign-in window is hidden, minimize other windows **inside the virtual machine**. Keep the outer browser hosting Skillable open.
 
 Allow about 40 seconds for retrieval. Run the activity and reference cells, then complete **Source Hunt**.
 
