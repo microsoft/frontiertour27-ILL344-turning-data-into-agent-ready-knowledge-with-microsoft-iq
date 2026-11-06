@@ -186,7 +186,7 @@ Caldova's procurement team has found Meridian API Works invoice and quality evid
 
 1. In the browser, go to +++https://app.fabric.microsoft.com+++ and sign in with your lab account.
 2. Select **Workspaces** and open the workspace whose name starts with **CaldovaSupplyChain-**. If several are listed, match its workspace ID in the browser URL to **FABRIC_WORKSPACE_ID** in `.env`.
-3. Open **CaldovaSupplierAnalytics**. Under **Tables**, preview **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**. Find **SUB-001** in the substance table and follow its ID through the linking table to a product.
+3. Open **CaldovaSupplierAnalytics**, then expand **Schemas > dbo > Tables**. Preview **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**. Find **SUB-001** in the substance table and follow its ID through the linking table to a product.
 4. Return to the workspace and open **CaldovaMedicinalProductOntology**. Inspect **MedicinalProduct**, **ActiveSubstance**, and **Manufacturer**, and the **contains** and **manufactures** relationships. The ontology gives business meaning to the table relationships.
 
 **Trace the relationship:** Use **ProductActiveSubstance** to connect **SUB-001** to a medicinal product. Keep that relationship available to compare with the retrieval result.
