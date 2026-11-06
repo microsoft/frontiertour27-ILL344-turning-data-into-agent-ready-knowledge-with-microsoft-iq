@@ -10,8 +10,8 @@ At any point during the lab, if you need to sign in to the virtual machine (Wind
 
 If you need to sign in the virtual machine, use the following credentials:
 
-- **User name**: +++@lab.VirtualMachine(Win11-Pro-Base).Username+++  
-- **Password**: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
+- **User name**: +++@lab.VirtualMachine(ILL344:Win11).Username+++
+- **Password**: +++@lab.VirtualMachine(ILL344:Win11).Password+++
 
 ### Sign into Azure & Microsoft 365
 
@@ -47,8 +47,8 @@ Follow the steps below to set up your environment and begin the lab.
 
 In the virtual machine, sign into Windows using the following credentials:
 
-- **User name**: +++@lab.VirtualMachine(Win11-Pro-Base).Username+++  
-- **Password**: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
+- **User name**: +++@lab.VirtualMachine(ILL344:Win11).Username+++
+- **Password**: +++@lab.VirtualMachine(ILL344:Win11).Password+++
 
 ### Access the lab repository
 
