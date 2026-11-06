@@ -165,15 +165,15 @@ In **part1-standard-foundry-iq-kb.ipynb**, run the cell under **Optional: Get th
 
 ### Add the knowledge base MCP server
 
-1. Select **Customize** in the sidebar, then select the **MCP** tab.
-2. Open the **Add** menu and select **MCP server**.
+1. Select **Customize** in the sidebar.
+2. Select **Add** in the upper-right corner, then select **MCP Server...**.
 3. Enter these values:
    - **Server name**: +++caldova-kb+++
    - **Server type**: **HTTP**, not Local/SSE
    - **URL**: the complete URL printed by the notebook
    - **Header name**: +++api-key+++
    - **Header value**: the value of **AZURE_SEARCH_ADMIN_KEY** from your lab `.env` file
-4. Select **Add server** and confirm that **caldova-kb** appears in the server list.
+4. Select **Add server**. Then select the **Installed** tab and confirm that **caldova-kb** appears under **MCP Servers**.
 5. Start a new chat by selecting **+** next to **Chats** in the sidebar and ask:
 
    +++Compare Summit Dose's documented CALD-201 commitments across its Caldova RFP response, agreement amendment, and purchase order.+++
