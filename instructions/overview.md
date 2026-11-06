@@ -36,9 +36,6 @@ For each exercise, **inspect the source in the browser, run the notebook, and co
 
 The browser makes the source data and created resources visible. The notebooks create the knowledge sources and knowledge bases and make authenticated retrieval calls. **You do not need to recreate resources in the portals.**
 
-> [!NOTE]
-> These instructions describe the hosted Skillable environment. If you deployed to your own subscription, use the [self-deployment guide](../deploy_yourself.md) for setup, then follow the exercises below using your repository location instead of **Desktop > aitour-ILL344**. Sample emails are seeded only in the hosted lab. Your own mailbox will not necessarily contain the Caldova messages.
-
 ## Getting started
 
 Follow the steps below to set up your environment and begin the lab.
@@ -115,7 +112,7 @@ Confirm that the search indexes have been created successfully:
 
 If your indexes are present and populated, keep this browser tab open. You will inspect their contents in Exercise 1. If either index is missing or empty, ask a proctor before continuing.
 
-Select **Next** to start **Exercise 1: Build Foundry IQ knowledge bases with agentic retrieval**. Outside Skillable, continue to the exercise below.
+Select **Next** to start **Exercise 1: Build Foundry IQ knowledge bases with agentic retrieval**.
 
 ===
 # Exercise 1: Build Foundry IQ knowledge bases with agentic retrieval
@@ -298,4 +295,4 @@ This agent runs inside the notebook. You do not deploy a Foundry Hosted Agent or
 2. In the notebook's tool-call table, find the retrieval call and inspect the query arguments. If no retrieval call is shown, do not assume the answer used the knowledge base.
 3. Compare the answer's shipment conclusion with Part 1 and with **EXC-VC-1026-04.pdf** in the browser. Wording may differ. The evidence and distribution conclusion should agree.
 
-Once you have completed all five notebooks, select **Next** in Skillable to review the summary and next steps. Outside Skillable, open the [lab summary](summary.md).
+Once you have completed all five notebooks, select **Next** in Skillable to review the summary and next steps.
