@@ -2,8 +2,17 @@
 .SYNOPSIS
     Seeds sample emails into the lab user's mailbox via Microsoft Graph API.
 .DESCRIPTION
-    Uses the service principal's app-only token to send emails from the lab user
-    to themselves. Requires Mail.Send application permission (admin-consented).
+    Uses the service principal's app-only token to create the emails directly in the
+    lab user's Inbox as received (non-draft) messages, then verifies they exist.
+    This bypasses Exchange mail transport, which can silently drop sendMail requests
+    in new lab tenants even though Graph returns 202 Accepted.
+
+    Requires Mail.ReadWrite application permission (admin-consented). If the token only
+    has Mail.Send, the script falls back to sendMail and saves a copy in Sent Items.
+    Delivery is then checked only if the token can read mail.
+
+    Every step is logged (service principal identity and roles, mailbox readiness,
+    Graph errors with request IDs, and a final mailbox summary) for lab troubleshooting.
 .PARAMETER UserUpn
     The lab user's UPN (email) to send messages to/from.
 .PARAMETER TenantId
@@ -24,7 +33,9 @@ $ErrorActionPreference = "Stop"
 
 function Log {
     param([string]$msg)
-    Write-Output "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] $msg"
+    # Write-Host (not Write-Output) so log lines inside functions don't leak into return values.
+    # The lifecycle runs this script as a child powershell process, so host output still reaches its log file.
+    Write-Host "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] $msg"
 }
 
 # Get an app-only token for Microsoft Graph
@@ -42,37 +53,144 @@ function Get-GraphToken {
     return $response.access_token
 }
 
-# Send an email from the user to themselves
-function Send-MailMessage {
+function Get-TokenClaims {
+    param([string]$Token)
+    $payload = $Token.Split('.')[1].Replace('-', '+').Replace('_', '/')
+    switch ($payload.Length % 4) { 2 { $payload += '==' } 3 { $payload += '=' } }
+    return [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($payload)) | ConvertFrom-Json
+}
+
+function Get-RequestId {
+    param($ErrorRecord)
+    try {
+        $headers = $ErrorRecord.Exception.Response.Headers
+        if ($headers -is [System.Net.WebHeaderCollection]) { return $headers['request-id'] }
+        return ($headers.GetValues('request-id') | Select-Object -First 1)
+    } catch {
+        return "n/a"
+    }
+}
+
+function Get-ErrorBody {
+    param($ErrorRecord)
+    if ($ErrorRecord.ErrorDetails -and $ErrorRecord.ErrorDetails.Message) {
+        return $ErrorRecord.ErrorDetails.Message
+    }
+    if ($ErrorRecord.Exception.Response) {
+        try {
+            $reader = New-Object System.IO.StreamReader($ErrorRecord.Exception.Response.GetResponseStream())
+            $body = $reader.ReadToEnd()
+            $reader.Close()
+            return $body
+        } catch { }
+    }
+    return $ErrorRecord.Exception.Message
+}
+
+function Invoke-Graph {
     param(
-        [string]$Token,
-        [string]$UserId,
-        [hashtable]$Mail
+        [string]$Method,
+        [string]$Url,
+        $Body = $null,
+        [int]$Attempts = 3
     )
     $headers = @{
-        Authorization  = "Bearer $Token"
+        Authorization  = "Bearer $script:GraphToken"
         "Content-Type" = "application/json; charset=utf-8"
     }
-    $url = "https://graph.microsoft.com/v1.0/users/$UserId/sendMail"
-    $payload = @{ message = $Mail; saveToSentItems = $false } | ConvertTo-Json -Depth 10
-    for ($attempt = 1; $attempt -le 3; $attempt++) {
+    for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
         try {
-            Invoke-RestMethod -Method POST -Uri $url -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($payload)) -TimeoutSec 60
-            return $true
-        } catch {
-            $errBody = ""
-            if ($_.Exception.Response) {
-                $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
-                $errBody = $reader.ReadToEnd()
-                $reader.Close()
+            if ($null -ne $Body) {
+                $json = $Body | ConvertTo-Json -Depth 10
+                return Invoke-RestMethod -Method $Method -Uri $Url -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($json)) -TimeoutSec 60
             }
-            Log "ERROR attempt $attempt ($($_.Exception.Response.StatusCode)): $errBody"
-            if ($attempt -lt 3) {
-                Start-Sleep -Seconds 5
+            return Invoke-RestMethod -Method $Method -Uri $Url -Headers $headers -TimeoutSec 60
+        } catch {
+            $status = [int]$_.Exception.Response.StatusCode
+            Log "Graph $Method $($Url.Split('?')[0]) attempt $attempt/$Attempts failed (HTTP $status, request-id $(Get-RequestId $_)): $(Get-ErrorBody $_)"
+            if ($attempt -lt $Attempts) { Start-Sleep -Seconds 5 }
+        }
+    }
+    throw "Graph $Method $Url failed after $Attempts attempts"
+}
+
+# A newly provisioned lab mailbox can take several minutes before Graph can reach it.
+function Wait-ForMailbox {
+    param([string]$UserId, [int]$TimeoutMinutes = 15)
+    $url = "https://graph.microsoft.com/v1.0/users/$UserId/mailFolders/inbox?`$select=id,totalItemCount"
+    $started = Get-Date
+    $deadline = $started.AddMinutes($TimeoutMinutes)
+    $check = 0
+    while ($true) {
+        $check++
+        try {
+            $inbox = Invoke-Graph -Method GET -Url $url -Attempts 1
+            Log "Mailbox check $check succeeded after $([int]((Get-Date) - $started).TotalSeconds)s"
+            return $inbox
+        } catch {
+            if ((Get-Date) -ge $deadline) {
+                throw "Mailbox for $UserId was not reachable within $TimeoutMinutes minutes ($check checks)"
+            }
+            Log "Mailbox check $check failed, retrying in 30 seconds (gives up after $TimeoutMinutes minutes)..."
+            Start-Sleep -Seconds 30
+        }
+    }
+}
+
+function Find-InboxMessage {
+    param([string]$UserId, [string]$Subject, [string]$Folder = "inbox")
+    $escaped = $Subject.Replace("'", "''")
+    $filter = [uri]::EscapeDataString("subject eq '$escaped'")
+    $url = "https://graph.microsoft.com/v1.0/users/$UserId/mailFolders/$Folder/messages?`$filter=$filter&`$select=id,subject,isDraft,isRead,receivedDateTime"
+    $result = Invoke-Graph -Method GET -Url $url
+    return @($result.value)
+}
+
+function Format-Message {
+    param($Message)
+    return "received $($Message.receivedDateTime), isDraft=$($Message.isDraft), isRead=$($Message.isRead), id ...$($Message.id.Substring([Math]::Max(0, $Message.id.Length - 12)))"
+}
+
+# Log where each seeded subject is, so the lifecycle log shows the final mailbox state.
+function Write-MailboxSummary {
+    param([string]$UserId, [string[]]$Folders)
+    Log "--- Mailbox summary ---"
+    foreach ($email in $emails) {
+        foreach ($folder in $Folders) {
+            try {
+                $found = @(Find-InboxMessage -UserId $UserId -Subject $email.subject -Folder $folder)
+                Log "[$folder] $($found.Count) x '$($email.subject)'"
+                foreach ($message in $found) { Log "    $(Format-Message $message)" }
+            } catch {
+                Log "[$folder] could not read mailbox: $($_.Exception.Message)"
+                return
             }
         }
     }
-    return $false
+}
+
+# Create the email directly in the Inbox. MAPI extended properties set the delivery
+# and submit times and clear the draft flag, so Outlook shows it as received mail.
+function New-InboxMessage {
+    param([string]$UserId, [hashtable]$Mail, [datetime]$ReceivedUtc)
+    $timestamp = $ReceivedUtc.ToString("yyyy-MM-ddTHH:mm:ssZ")
+    $message = @{}
+    foreach ($key in $Mail.Keys) { $message[$key] = $Mail[$key] }
+    $message.sender = $Mail.from
+    $message.singleValueExtendedProperties = @(
+        @{ id = "SystemTime 0x0E06"; value = $timestamp },
+        @{ id = "SystemTime 0x0039"; value = $timestamp },
+        @{ id = "Integer 0x0E07"; value = "1" }
+    )
+    $created = Invoke-Graph -Method POST -Url "https://graph.microsoft.com/v1.0/users/$UserId/mailFolders/inbox/messages" -Body $message
+    # 0x0E07 = 1 also marks the message read. Reset it so it looks new in Outlook.
+    Invoke-Graph -Method PATCH -Url "https://graph.microsoft.com/v1.0/users/$UserId/messages/$($created.id)" -Body @{ isRead = $false } | Out-Null
+    return $created
+}
+
+function Send-MailFallback {
+    param([string]$UserId, [hashtable]$Mail)
+    Invoke-Graph -Method POST -Url "https://graph.microsoft.com/v1.0/users/$UserId/sendMail" -Body @{ message = $Mail; saveToSentItems = $true } | Out-Null
 }
 
 # ============================================================
@@ -137,19 +255,94 @@ $emails = @(
 # Main
 # ============================================================
 
-Log "Sending $($emails.Count) emails to mailbox: $UserUpn"
+Log "=== Email seeding started ==="
+Log "Target mailbox: $UserUpn | Tenant: $TenantId | Client ID: $ClientId | PowerShell $($PSVersionTable.PSVersion)"
 
-$token = Get-GraphToken
-Log "Acquired Graph API token (length: $($token.Length))"
-
-foreach ($email in $emails) {
-    $ok = Send-MailMessage -Token $token -UserId $UserUpn -Mail $email
-    if ($ok) {
-        Log "Sent: $($email.subject)"
-    } else {
-        Log "FAILED: $($email.subject)"
-    }
-    Start-Sleep -Seconds 1
+try {
+    $script:GraphToken = Get-GraphToken
+} catch {
+    Log "FAILED: could not acquire Graph token: $(Get-ErrorBody $_)"
+    exit 1
+}
+$claims = Get-TokenClaims $script:GraphToken
+$roles = @($claims.roles)
+$expires = [DateTimeOffset]::FromUnixTimeSeconds([long]$claims.exp).UtcDateTime.ToString("u")
+Log "Graph token for app '$($claims.app_displayname)' (appid $($claims.appid), tenant $($claims.tid)), expires $expires"
+Log "Graph application roles ($($roles.Count)): $(($roles | Sort-Object) -join ', ')"
+foreach ($role in @("Mail.ReadWrite", "Mail.Read", "Mail.Send")) {
+    Log "  $role : $(if ($roles -contains $role) { 'YES' } else { 'no' })"
 }
 
-Log "Email seeding complete!"
+if ($roles -notcontains "Mail.ReadWrite") {
+    Log "WARNING: Token lacks Mail.ReadWrite, so emails cannot be created in the Inbox."
+    Log "Falling back to sendMail with a Sent Items copy. Exchange can still drop delivery after Graph returns 202."
+    if ($roles -notcontains "Mail.Send") {
+        Log "FAILED: Token lacks Mail.Send too. Ask Skillable to grant Mail.ReadWrite (application) with admin consent."
+        exit 1
+    }
+    $failed = 0
+    foreach ($email in $emails) {
+        try {
+            Send-MailFallback -UserId $UserUpn -Mail $email
+            Log "Submitted via sendMail (Graph 202, delivery not confirmed): $($email.subject)"
+        } catch {
+            Log "FAILED sendMail: $($email.subject) - $($_.Exception.Message)"
+            $failed++
+        }
+        Start-Sleep -Seconds 1
+    }
+    if ($roles -contains "Mail.Read") {
+        Log "Waiting 60 seconds for delivery before checking the mailbox..."
+        Start-Sleep -Seconds 60
+        Write-MailboxSummary -UserId $UserUpn -Folders @("inbox", "sentitems", "junkemail")
+    } else {
+        Log "Token lacks Mail.Read, so delivery cannot be checked. Grant Mail.ReadWrite to seed and verify reliably."
+    }
+    Log "=== Email seeding finished (unverified, $failed submit failure(s)) ==="
+    if ($failed -gt 0) { exit 1 }
+    exit 0
+}
+
+try {
+    $inbox = Wait-ForMailbox -UserId $UserUpn
+} catch {
+    Log "FAILED: $($_.Exception.Message)"
+    exit 1
+}
+Log "Mailbox reachable (Inbox items before seeding: $($inbox.totalItemCount))"
+
+$failed = 0
+$receivedUtc = (Get-Date).ToUniversalTime().AddHours(-$emails.Count)
+foreach ($email in $emails) {
+    $receivedUtc = $receivedUtc.AddHours(1)
+    try {
+        $existing = @(Find-InboxMessage -UserId $UserUpn -Subject $email.subject)
+        if ($existing.Count -gt 0) {
+            Log "Already in Inbox, skipping: $($email.subject) ($(Format-Message $existing[0]))"
+            continue
+        }
+        Log "Creating in Inbox (received $($receivedUtc.ToString('u'))): $($email.subject)"
+        New-InboxMessage -UserId $UserUpn -Mail $email -ReceivedUtc $receivedUtc | Out-Null
+        $found = @(Find-InboxMessage -UserId $UserUpn -Subject $email.subject)
+        if ($found.Count -gt 0 -and -not $found[0].isDraft) {
+            Log "Verified in Inbox: $($email.subject) ($(Format-Message $found[0]))"
+        } elseif ($found.Count -gt 0) {
+            Log "FAILED verification (created as draft): $($email.subject) ($(Format-Message $found[0]))"
+            $failed++
+        } else {
+            Log "FAILED verification (not found after create): $($email.subject)"
+            $failed++
+        }
+    } catch {
+        Log "FAILED: $($email.subject) - $($_.Exception.Message)"
+        $failed++
+    }
+}
+
+Write-MailboxSummary -UserId $UserUpn -Folders @("inbox")
+
+if ($failed -gt 0) {
+    Log "=== Email seeding finished with $failed failure(s) ==="
+    exit 1
+}
+Log "=== Email seeding complete and verified ==="
