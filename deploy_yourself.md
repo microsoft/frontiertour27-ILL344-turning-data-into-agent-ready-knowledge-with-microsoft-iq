@@ -11,6 +11,14 @@ This folder contains resources for deploying the ILL344 knowledge base infrastru
 - **Git** (to clone this repository)
 - **VS Code** or **GitHub Codespaces** with Jupyter extension (recommended)
 
+### Use GitHub Codespaces or a Dev Container
+
+For a preconfigured environment, select **Code > Codespaces > Create codespace on main** in GitHub. Locally, install the VS Code **Dev Containers** extension, clone this repository, and run **Dev Containers: Reopen in Container** with Docker running.
+
+The [dev container](.devcontainer/devcontainer.json) includes Python 3.13, uv, Git, Azure CLI, Azure Developer CLI, and the Python and Jupyter extensions. Setup uses uv to create a workspace `.venv` and install [notebook dependencies](src/notebooks/requirements.txt). VS Code uses this environment for Python, and its commands are available in new terminals. Pip is included for compatibility with the deployment hooks.
+
+Once setup completes, skip to **Step 3** below. No Azure sign-in or resources are created automatically. When opening a notebook, select the workspace `.venv` as its Python kernel if prompted. Azure permissions and Work IQ prerequisites still apply.
+
 ### Required Azure Permissions
 
 You'll need permissions to:
