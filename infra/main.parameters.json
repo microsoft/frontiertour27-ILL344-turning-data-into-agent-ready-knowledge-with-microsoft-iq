@@ -11,6 +11,9 @@
     "deployFabricCapacity": {
       "value": "${DEPLOY_FABRIC_CAPACITY=true}"
     },
+    "deployWebIq": {
+      "value": "${DEPLOY_WEB_IQ=true}"
+    },
     "deployIndexingStorage": {
       "value": "${DEPLOY_INDEXING_STORAGE=false}"
     }

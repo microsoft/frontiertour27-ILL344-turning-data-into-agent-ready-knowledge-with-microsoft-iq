@@ -34,8 +34,8 @@ For a 60-minute session:
 
 1. **First 15 minutes:** Cover the presentation deck.
 2. **Transition to the lab:** Show attendees how to sign in to the Skillable environment and complete the pre-checks in the [lab instructions](../instructions/overview.md#verify-the-environment-setup).
-3. **Orient attendees in the virtual machine:** Show them how to open **Desktop > aitour-ILL344** in Visual Studio Code and find the notebooks in **src/notebooks/**. Start with **part1-standard-foundry-iq-kb.ipynb**.
-4. **Remainder of the session:** Let attendees work through the notebooks sequentially for the rest of the 60-minute session.
+3. **Orient attendees in the virtual machine:** Show them how to open **Desktop > aitour-ILL344** in Visual Studio Code and find the notebooks in **src/notebooks/**. Start with **part1-web-iq.ipynb**, after attendees create their Web IQ API key as described in Exercise 1.
+4. **Remainder of the session:** Let attendees work through the four notebooks sequentially (Web IQ, Fabric IQ, Work IQ, then Foundry IQ) for the rest of the 60-minute session.
 
 ## Demo reproducibility
 
