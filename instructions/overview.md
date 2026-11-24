@@ -235,25 +235,25 @@ Your mailbox has three emails about CALD-201. Read them before asking Work IQ ab
 > [!NOTE]
 > These are fictional scenario dates, not deadlines relative to today's date. If the hosted mailbox is empty or the messages are missing, ask a proctor. Do not seed messages yourself or switch to your personal mailbox. If you self-deployed, use relevant messages you are authorized to access and adapt the questions.
 
-## Ask, retrieve, and discover
+## Ask, retrieve, and read
 
 In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
-Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 8**, signing in with the lab account when prompted. These steps only read data.
+Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 7**, signing in with the lab account when prompted. These steps only read data.
 
 - **Step 3** uses **ask** for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
 - **Step 4** uses **retrieve** for the cited passages behind that answer.
-- **Steps 5 to 8** use **discover**, **search_paths**, **get_schema**, **fetch**, and **list_agents**.
+- **Steps 5 to 7** use **search_paths**, **get_schema**, **fetch**, and **list_agents**.
 
 ## Act on your behalf
 
 The remaining cells **change real data in your lab mailbox and calendar without input prompts**. Run them one at a time and check the result in Outlook after each:
 
-1. Run **Step 9** to create the decision meeting. In Outlook, open **Calendar** and go to tomorrow. Find **CALD-201: decide on the weekend coating slot**, a 30-minute event at 15:00 UTC (Outlook shows it in your local time zone), and open it to see the agenda.
-2. Run **Step 10** to update the meeting and check your reminders. Refresh the calendar and confirm that the subject now ends with **and change control** and that the event is 45 minutes long.
-3. Run **Step 11** to send the follow-up. In Outlook, open your **Inbox** and find **CALD-201 follow-up: weekend coating slot decision** with the purchase order attached. It can take a minute to arrive. You can also find it in **Sent Items**.
-4. Run **Step 12** to download the attachment from Sent Items with **fetch_blob** and confirm that it matches the file on disk.
-5. Run **Step 13** to delete the meeting. Refresh the calendar and confirm that the event is gone.
+1. Run **Step 8** to create the decision meeting. In Outlook, open **Calendar** and go to tomorrow. Find **CALD-201: decide on the weekend coating slot**, a 30-minute event at 15:00 UTC (Outlook shows it in your local time zone), and open it to see the agenda.
+2. Run **Step 9** to update the meeting and check your reminders. Refresh the calendar and confirm that the subject now ends with **and change control** and that the event is 45 minutes long.
+3. Run **Step 10** to send the follow-up. In Outlook, open your **Inbox** and find **CALD-201 follow-up: weekend coating slot decision** with the purchase order attached. It can take a minute to arrive. You can also find it in **Sent Items**.
+4. Run **Step 11** to download the attachment from Sent Items with **fetch_blob** and confirm that it matches the file on disk.
+5. Run **Step 12** to delete the meeting. Refresh the calendar and confirm that the event is gone.
 
 When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, then check Outlook to see which actions have completed before continuing. A proctor can help if an action needs state from before the restart, or if a write fails with a policy error.
 
