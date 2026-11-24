@@ -23,7 +23,7 @@ You gave agents Caldova context with Microsoft IQ:
 ## Keep up with Microsoft IQ
 
 - [Microsoft IQ Live](https://aka.ms/MicrosoftIQLive): Register for and catch up on IQ news, product updates, demonstrations, and architecture guidance from the live series.
-- [Microsoft IQ Series](https://aka.ms/iq-series/playlist): Watch the Foundry IQ and Work IQ episodes on Microsoft Developer YouTube.
+- [Microsoft IQ Series](https://github.com/microsoft/iq-series): Follow the Foundry IQ, Fabric IQ, Work IQ, and Web IQ episodes with their code samples.
 - [Microsoft IQ Deep Dive](https://aka.ms/iqdeepdive): Go further with notebooks and agents that bring together Foundry IQ, Work IQ, Fabric IQ, and Web IQ.
 
 ## Try it on your own
