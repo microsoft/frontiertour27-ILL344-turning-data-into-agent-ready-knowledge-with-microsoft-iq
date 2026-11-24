@@ -1,13 +1,15 @@
 ===
 # Summary
 
-You built context-aware AI with Microsoft IQ:
+You helped Caldova's procurement team get through a busy week of supplier issues by giving AI agents the right context with Microsoft IQ:
 
-- Web IQ over MCP that grounds answers in real-time web content.
-- Fabric IQ over MCP with a Fabric ontology and a Fabric data agent.
-- Work IQ over MCP with your Microsoft 365 email and calendar.
-- A Foundry IQ knowledge base with agentic retrieval over indexed documents.
-- MCP servers for each IQ in the GitHub Copilot app.
+- **Web IQ** found real-time guidance from the web on handling a temperature excursion during shipment.
+- **Fabric IQ** used the ontology to show which Caldova products contain Caldovexine and who makes it, and the data agent to show how Meridian API Works' delivery performance is trending.
+- **Work IQ** summarized the open CALD-201 decisions in your inbox, scheduled the delivery decision, and sent a follow-up with the approved purchase order attached.
+- **Foundry IQ** built a knowledge base over Caldova's purchasing policy and supplier documents to decide whether the 4,800 units could be distributed.
+- The **GitHub Copilot app** connected to each IQ as an MCP server, so you could ask the same kinds of questions from a chat.
+
+Along the way, you checked each answer against the source it came from.
 
 ## Continue learning
 
