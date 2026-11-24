@@ -36,7 +36,7 @@ Each notebook stands on its own, but the exercises follow one Caldova investigat
 
 ## Publishing to Skillable
 
-Use **overview.md** for setup and the four exercises, followed by **summary.md** for the wrap-up. Preserve the `===` separators, which start new sidebar pages, and the existing lab credential tokens. The notebooks link back to the same guide for learners outside Skillable.
+Use **overview.md** for setup and the four exercises, followed by **summary.md** for the wrap-up. Preserve the `===` separators, which start new sidebar pages, and the existing lab credential tokens. The notebooks don't link to the guide. Each one ends by asking attendees to return to the lab instructions.
 
 ## Discussions
 
