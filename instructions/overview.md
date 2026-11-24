@@ -82,12 +82,12 @@ A Web IQ account was created for you in your resource group. Create an API key f
 2. In the sign-in prompt, select your lab account.
 3. In **Select an Azure Resource**, select your lab subscription for **Azure subscription**, and then select the resource that starts with **ill344-webiq-** for **Resource**. Select **Finish**.
 4. If a dialog invites you to try Web IQ in a playground, select **Skip**.
-5. On the profile management page, scroll to the bottom. Under **Authentication > API Keys**, select **Create API key**, enter any name, and select **Create**. Copy the new key.
+5. On the profile management page, scroll to the bottom. Under **Authentication > API Keys**, select **Create API key**. For the name, enter +++ill344-lab+++, and then select **Create**. Copy the new key.
 
 Then save the key so the notebook can use it:
 
 1. In Visual Studio Code, open the **.env** file in the lab folder.
-2. Add a new line at the end of the file with **WEB_IQ_KEY=**, and paste the key after the equals sign. For example: **WEB_IQ_KEY=your-key**.
+2. Add a new line at the end of the file, enter +++WEB_IQ_KEY=+++, and paste the key right after the equals sign, with no spaces or quotes.
 3. Save the file.
 
 ## Call Web IQ from the notebook
