@@ -190,7 +190,7 @@ In Visual Studio Code, open the **.env** file in the lab folder and find **FABRI
 4. Confirm that **fabric-iq-ontology** is toggled on and has a green check mark. If sign-in still fails, let a proctor know.
 5. Select **New** and ask:
 
-    +++Use the Fabric IQ ontology to find which Caldova medicinal products contain Caldovexine and which manufacturers make it.+++
+    +++Which Caldova medicinal products contain Caldovexine, and which manufacturers make it?+++
 
 ### Add the data agent server
 
@@ -209,7 +209,7 @@ In Visual Studio Code, open the **.env** file in the lab folder and find **FABRI
 4. Confirm that **fabric-iq-data-agent** is toggled on and has a green check mark. If sign-in still fails, let a proctor know.
 5. Select **New** and ask:
 
-    +++Use the Fabric IQ data agent to show how Meridian API Works' OTIF changed over the last four weekly snapshots.+++
+    +++How did Meridian API Works' OTIF change over the last four weekly snapshots?+++
 
 ===
 # Exercise 3: Work IQ
