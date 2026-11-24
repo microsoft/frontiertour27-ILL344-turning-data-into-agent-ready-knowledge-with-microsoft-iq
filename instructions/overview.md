@@ -2,11 +2,9 @@
 
 ## Overview
 
-In this lab, you give AI agents context with Microsoft IQ: **Web IQ** for the web, **Fabric IQ** for structured business data, **Work IQ** for your Microsoft 365 work, and a **Foundry IQ** knowledge base over your documents. For each IQ, you first call it from a Python notebook, most of them through Model Context Protocol (MCP), and then you add it as an MCP server in the GitHub Copilot app.
+In this lab, you give AI agents context with Microsoft IQ: Web IQ for the web, Fabric IQ for structured business data, Work IQ for your Microsoft 365 work, and Foundry IQ for your documents. For each IQ, you call it from a Python notebook, and then you add it as an MCP server in the GitHub Copilot app so you can ask it questions from a chat.
 
-The scenario is **Caldova**, a fictional pharmaceutical company. You are a procurement analyst investigating supplier issues: public cold-chain guidance on the web, supplier, product, and performance data in Fabric, CALD-201 emails in your mailbox, and purchasing policy, supplier records, and approved agreements in Azure AI Search.
-
-Your job is not just to get an answer. It is to show **which evidence supports each claim**. An email about a possible delay is not an amended purchase order. A web article about cold-chain guidance is not Caldova's investigation report. For each exercise, **inspect the source in the browser, run the notebook, and compare the answer with the source**.
+The scenario is Caldova, a fictional pharmaceutical company, where you work as a procurement analyst looking into supplier issues: cold-chain guidance on the web, supplier and product data in Fabric, CALD-201 emails in your mailbox, and purchasing policies and agreements in Azure AI Search. Along the way, you check each answer against the source it came from.
 
 ## Sign in to Windows
 
