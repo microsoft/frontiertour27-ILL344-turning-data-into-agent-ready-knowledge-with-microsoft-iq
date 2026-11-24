@@ -1,125 +1,74 @@
 @lab.Title
-## Before you begin
-
-<details>
-<summary><strong>🔑 Lab credentials (click to expand when you need to sign in)</strong></summary>
-
-At any point during the lab, if you need to sign in to the virtual machine (Windows) or any Azure or Microsoft 365 apps, use the credentials provided below. Use the lab account, not your personal or work account.
-
-### Sign into virtual machine (Windows)
-
-If you need to sign in the virtual machine, use the following credentials:
-
-- **User name**: +++@lab.VirtualMachine(ILL344:Win11).Username+++
-- **Password**: +++@lab.VirtualMachine(ILL344:Win11).Password+++
-
-### Sign into Azure & Microsoft 365
-
-If you need to sign in to any Azure or Microsoft 365 apps, use the following credentials:
-
-- **Username**: +++@lab.CloudPortalCredential(User1).Username+++  
-- **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
-
-</details>
 
 ## Overview
 
-You are a procurement analyst at **Caldova**, a fictional pharmaceutical company. Your team needs to investigate supplier issues and prepare a supply-chain briefing. The answers are spread across the public web, structured supplier data, recent email, purchasing policy, supplier records, and approved agreements.
+In this lab, you give AI agents context with Microsoft IQ: **Web IQ** for the web, **Fabric IQ** for structured business data, **Work IQ** for your Microsoft 365 work, and a **Foundry IQ** knowledge base over your documents. For each IQ, you first call it from a Python notebook, most of them through Model Context Protocol (MCP), and then you add it as an MCP server in the GitHub Copilot app.
 
-Your job is not just to get an answer. It is to show **which evidence supports each claim**. An email about a possible delay is not an amended purchase order. A web article about cold-chain guidance is not Caldova's investigation report.
+The scenario is **Caldova**, a fictional pharmaceutical company. You are a procurement analyst investigating supplier issues: public cold-chain guidance on the web, supplier, product, and performance data in Fabric, CALD-201 emails in your mailbox, and purchasing policy, supplier records, and approved agreements in Azure AI Search.
 
-Through four exercises, you will give agents context with Microsoft IQ: **Web IQ** for the web, **Fabric IQ** for structured business data, **Work IQ** for your Microsoft 365 work, and a **Foundry IQ** knowledge base over Caldova's documents. You will call each one from a Python notebook, most of them through Model Context Protocol (MCP).
+Your job is not just to get an answer. It is to show **which evidence supports each claim**. An email about a possible delay is not an amended purchase order. A web article about cold-chain guidance is not Caldova's investigation report. For each exercise, **inspect the source in the browser, run the notebook, and compare the answer with the source**.
 
-### How to work through the lab
+## Sign in to Windows
 
-For each exercise, **inspect the source in the browser, run the notebook, and compare the answer with the source**. Keep this guide open alongside Visual Studio Code.
-
-The browser makes the source data and created resources visible. The notebooks create resources and make authenticated calls. **You do not need to recreate resources in the portals.**
-
-## Getting started
-
-Follow the steps below to set up your environment and begin the lab.
-
-### Sign into Windows
-
-In the virtual machine, sign into Windows using the following credentials:
+Sign in to the virtual machine with these credentials:
 
 - **User name**: +++@lab.VirtualMachine(ILL344:Win11).Username+++
 - **Password**: +++@lab.VirtualMachine(ILL344:Win11).Password+++
 
-### Access the lab repository
+## Set up Visual Studio Code
 
-Once signed in to the Skillable environment, you'll find the lab repository already cloned on your desktop under the folder: **Desktop > aitour-ILL344**.
+### Open the lab folder
 
-> This folder contains all the code, notebooks, and resources you'll need for the lab.
+1. Open Visual Studio Code.
+2. Select **File > Open Folder**, go to **Desktop**, select the **aitour-ILL344** folder, and then select **Select Folder**.
+3. When prompted whether to trust the authors of the files, select **Yes, I trust the authors**.
 
-### Open the project folder in Visual Studio Code
+### Check the environment setup
 
-Open Visual Studio Code and select **File > Open Folder**. Then navigate to Desktop and select the **aitour-ILL344** folder and then **Select Folder**.
+Your Azure resources, search indexes, Fabric items, Work IQ app registration, and sample emails are already created for you.
 
-> [!TIP]
->
-> When prompted whether to trust the authors of the files, select **Yes, I trust the authors**.
+1. In Visual Studio Code, select **Terminal > New Terminal**.
+2. Run this command to show the settings that setup saved for you:
 
-### Verify the environment setup
+    +++Get-Content .env | Select-String "SEARCH_SERVICE_ENDPOINT|MCP_URL|WORK_IQ_ENTRA_APP_ID"+++
 
-All required Azure services, Fabric items, and sample emails have already been provisioned for you.
+    You should see three lines: **AZURE_SEARCH_SERVICE_ENDPOINT**, **FABRIC_ONTOLOGY_MCP_URL**, and **WORK_IQ_ENTRA_APP_ID**. If any are missing, let a proctor know.
 
-<details>
-<summary><strong>📋 What's pre-configured (click to expand for details)</strong></summary>
+You will add **WEB_IQ_KEY** to the same file in the Web IQ exercise, and the Fabric IQ notebook adds **FABRIC_DATA_AGENT_MCP_URL**. Keep keys and tokens private. Do not paste `.env` contents into chat, screenshots, or shared notes.
 
-- **Web IQ** - A Web IQ account in your resource group. You create its API key in Exercise 1.
-- **Microsoft Fabric** - A workspace with the **CaldovaSupplierAnalytics** lakehouse and the **CaldovaMedicinalProductOntology** ontology
-- **Work IQ** - A Microsoft Entra app registration with admin consent to call Work IQ as you, and three sample CALD-201 emails in your mailbox
-- **Foundry IQ (Azure AI Search)** - Two pre-created indexes
-  - **supplier-evidence:** Supplier invoices, shipment evidence, and quality records
-  - **sourcing-documents:** RFP responses, agreements, purchase orders, and sourcing diagrams
-- **Azure OpenAI** - Deployed models **gpt-5.4** for chat completion and answer synthesis and **text-embedding-3-large** for vector embeddings
-- **Pre-computed vectors** - All Caldova document chunks are already vectorized and indexed
+### Sign in to the Azure portal
 
-</details>
-
-#### Verify environment variables
-
-1. Open the **.env** file under the main project folder.  
-2. Verify that it includes these environment variables:
-   - *AZURE_SEARCH_SERVICE_ENDPOINT*
-   - *AZURE_SEARCH_ADMIN_KEY*
-   - *AZURE_OPENAI_ENDPOINT*
-   - *AZURE_OPENAI_KEY*
-   - *AZURE_OPENAI_CHATGPT_DEPLOYMENT*
-   - *AZURE_OPENAI_CHATGPT_MODEL_NAME*
-   - *AZURE_OPENAI_EMBEDDING_DEPLOYMENT*
-   - *AZURE_TENANT_ID*
-   - *FABRIC_WORKSPACE_ID*
-   - *FABRIC_ONTOLOGY_ID*
-   - *FABRIC_ONTOLOGY_MCP_URL*
-   - *WORK_IQ_ENTRA_APP_ID*
-   - *WORK_IQ_ENTRA_TENANT_ID*
-
-You will add **WEB_IQ_KEY** yourself in Exercise 1. If any other variable is missing, ask a proctor before continuing.
-
-Keep keys and tokens private. Do not paste `.env` contents into chat, screenshots, or shared notes.
-
-#### Sign in to the Azure portal
-
-1. Open a web browser and navigate to the +++https://portal.azure.com+++.
-2. Sign in using your lab credentials:
-    - **Username**: +++@lab.CloudPortalCredential(User1).Username+++  
-    - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
+1. Open the browser and go to +++https://portal.azure.com+++.
+2. Sign in with your lab credentials:
+   - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
+   - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
 3. If the **Stay signed in?** prompt appears, select **Yes**.
 
 Keep the browser open. The next sign-ins reuse this session.
 
-### Optional: Set up the GitHub Copilot app
+## Sign in to GitHub
 
-Each exercise ends with an optional activity that adds the same IQ to the **GitHub Copilot** app as an MCP server, so you can query it from a chat. If you want to try those activities, set up the app now. Otherwise, skip this section.
+1. In the browser, sign in to the GitHub enterprise organization for Skillable:
 
-1. In the browser, sign in through +++https://github.com/enterprises/skillable-events/sso+++. This uses the special GitHub account created for your lab environment, not your personal GitHub account.
-2. Open the **GitHub Copilot** app from the desktop shortcut.
-3. Select **Sign in to GitHub**. If an installation process starts, wait for it to complete before continuing with the GitHub sign-in process.
-4. When the browser opens, use the lab GitHub account, paste the device code from the app, and select **Authorize GitHub**.
-5. Return to the app. You do not need to connect a repository. Select **Continue** on the repository selection screen and **Finish** on the preferences screen.
+    +++https://github.com/enterprises/skillable-events/sso+++
+
+You will be signed into a special account created for the lab environment, not your actual GitHub account.
+
+## Set up the GitHub Copilot app
+
+In the exercises, you will connect the GitHub Copilot app to each IQ so you can query it from a chat.
+
+1. Open the **GitHub Copilot** app from the desktop shortcut.
+2. Select **Sign in to GitHub**. If an installation process starts, wait for it to complete before continuing.
+3. When the browser opens, select the lab GitHub account.
+4. Paste the 8-digit code from the app screen.
+5. Select **Authorize GitHub**.
+6. Return to the **GitHub Copilot** app. On the next screen, leave the folder selection empty and select **Continue**. You will use the app for chat and VS Code for working with the lab folder.
+7. Send a message to the agent in the chat box, such as:
+
+    +++What should I check when a pharmaceutical shipment has a temperature excursion?+++
+
+    The agent answers from its own training data, without sources you can verify. In the next exercise, you give it Web IQ.
 
 Select **Next** to start **Exercise 1: Ground answers in the web with Web IQ**.
 
@@ -157,18 +106,21 @@ You list the Web IQ tools, then search web pages, images, and videos.
 1. In the Step 3 results, pick a result from a peer-reviewed journal or a regulator. Open its URL in the browser and find the passage on the page.
 2. Note which questions about the shipment the web cannot answer, such as what happened to these 4,800 units. You will answer them from Caldova's own evidence in Exercise 4.
 
-## Optional: Use Web IQ in the GitHub Copilot app
+## Use Web IQ in the GitHub Copilot app
 
 1. In the GitHub Copilot app, select **Customize**, and then select **Add > MCP Server...**.
 2. Enter these values:
     - **Server name**: +++web-iq+++
-    - **Server type**: **HTTP**, not Local/SSE
+    - **Server type**: HTTP
     - **URL**: +++https://api.microsoft.ai/v3/mcp+++
 3. Select **Add header**, and enter the name +++x-apikey+++. Switch to Visual Studio Code, copy the **WEB_IQ_KEY** value from **.env**, and then switch back to the app and paste it as the header value.
-4. Select **Add server**. Then select the **Installed** tab and confirm that **web-iq** is toggled on and has a green check mark.
-5. Start a new chat by selecting **+** next to **Chats** in the sidebar and ask:
+4. Select **Add server**, and then switch to the **Installed** tab. Under **MCP Servers**, confirm that **web-iq** is toggled on and has a green check mark.
 
-    +++Use Web IQ to find current guidance on handling temperature excursions during pharmaceutical shipments. Cite your sources.+++
+Then select **New** and ask the same question as before, this time with Web IQ:
+
++++Use Web IQ to find current guidance on what to check when a pharmaceutical shipment has a temperature excursion. Cite your sources.+++
+
+Compare the answer with the one from the setup. This time, each claim should link to a source you can open.
 
 Once you have completed the notebook, select **Next** to continue to **Exercise 2: Query structured data with Fabric IQ**.
 
@@ -204,27 +156,36 @@ If the browser sign-in window is hidden, minimize other windows **inside the vir
 3. Open a deep link from the notebook's answer, inspect the generated query, and compare Meridian API Works' latest values with the **SupplierPerformance** rows you previewed.
 4. Compare the ontology's product answer with the **SUB-001** relationship you traced in the lakehouse.
 
-## Optional: Use Fabric IQ in the GitHub Copilot app
+## Use Fabric IQ in the GitHub Copilot app
 
 Add two MCP servers, one for the ontology and one for the data agent. Both sign you in with your Microsoft Entra account, so they don't need headers.
 
-In Visual Studio Code, open the **.env** file and find **FABRIC_ONTOLOGY_MCP_URL** and **FABRIC_DATA_AGENT_MCP_URL**. The notebook added the second one in Step 6.
+In Visual Studio Code, open the **.env** file in the lab folder and find **FABRIC_ONTOLOGY_MCP_URL** and **FABRIC_DATA_AGENT_MCP_URL**. The notebook added the second one in Step 6. Keep the file open so you can switch back to it when each URL is needed.
 
 1. In the GitHub Copilot app, select **Customize**, and then select **Add > MCP Server...**.
 2. Enter these values, and then select **Add server**:
     - **Server name**: +++fabric-iq-ontology+++
-    - **Server type**: **HTTP**
-    - **URL**: the complete **FABRIC_ONTOLOGY_MCP_URL** value from **.env**. Copy only the URL after the first **=**.
+    - **Server type**: HTTP
+    - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_ONTOLOGY_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
 3. Select **Add > MCP Server...** again, enter these values, and then select **Add server**:
     - **Server name**: +++fabric-iq-data-agent+++
-    - **Server type**: **HTTP**
-    - **URL**: the complete **FABRIC_DATA_AGENT_MCP_URL** value from **.env**. Copy only the URL after the first **=**.
-4. Switch to the **Installed** tab. For each server, select **Sign in** and complete the Microsoft Entra sign-in in the browser with your lab account:
+    - **Server type**: HTTP
+    - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_DATA_AGENT_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
+4. Switch to the **Installed** tab. Under **MCP Servers**, find **fabric-iq-ontology** and select **Sign in**. A Microsoft Entra sign-in page opens in the browser. Sign in with:
+
     - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
     - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
-5. Confirm that both servers are toggled on and each has a green check mark. Then start a new chat and ask:
 
-    +++Which Caldova medicinal products contain Caldovexine, and how has Meridian API Works' OTIF changed over the last four weeks?+++
+    At the **Enter Temporary Access Pass** screen, enter the pass above and select **Sign in**. Then return to the GitHub Copilot app.
+
+5. On the **Installed** tab, find **fabric-iq-data-agent**, select **Sign in**, and complete the sign-in in the browser the same way.
+6. Confirm that both servers are toggled on and each has a green check mark. If sign-in still fails, let a proctor know.
+
+Then select **New** and ask:
+
++++Which Caldova medicinal products contain Caldovexine, and which manufacturers make it?+++
+
++++How has Meridian API Works' OTIF changed over the last four weekly snapshots?+++
 
 Once you have completed the notebook, select **Next** to continue to **Exercise 3: Bring in work context with Work IQ**.
 
@@ -273,18 +234,30 @@ When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, th
 1. Pick an owner or deadline from the Step 3 answer. Find a passage that supports it in the Step 4 results, then open the original email in Outlook and compare.
 2. In your follow-up email, find the statement that comes from the purchase order rather than the emails. Check that it matches **PO-CAL-SUM-2026-1108.pdf**.
 
-## Optional: Use Work IQ in the GitHub Copilot app
+## Use Work IQ in the GitHub Copilot app
 
 Work IQ is available as a plugin, so you install it instead of adding the MCP server yourself.
 
 1. In the GitHub Copilot app, select **Customize**, and then select **Browse**.
 2. Search for +++workiq+++.
-3. Under **Plugins**, find **WorkIQ** from Microsoft, and select **Install**.
-4. Start a new chat and ask:
+3. Under **Plugins**, find **WorkIQ** from Microsoft ("Find answers across Microsoft 365 emails, meetings, documents, and Teams messages"), and select **Install**.
+4. Select **New** and ask:
 
-    +++Check my recent emails about CALD-201. Summarize the open actions, owners, and deadlines.+++
+    +++Check my recent emails about CALD-201. Summarize the open actions, who owns them, and the deadlines.+++
 
-5. If the chat shows that the **workiq** MCP server needs you to sign in, select **Sign in** and complete the Microsoft Entra sign-in in the browser with your lab account. Then send the same question again.
+5. If the chat shows **Extension "workiq" needs you to sign in to MCP server "workiq"**, select **Sign in**. Before you sign in, the agent may answer that it can't check your emails. That's expected.
+6. A Microsoft Entra sign-in page opens in the browser. Sign in with:
+
+    - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
+    - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
+
+    At the **Enter Temporary Access Pass** screen, enter the pass above and select **Sign in**.
+
+7. Return to the GitHub Copilot app and send the same question again:
+
+    +++Check my recent emails about CALD-201. Summarize the open actions, who owns them, and the deadlines.+++
+
+    Confirm that Work IQ returns a summary of the sample emails. If sign-in still fails or the chat reports that the MCP server is not configured, let a proctor know.
 
 Once you have completed the notebook, select **Next** to continue to **Exercise 4: Build a knowledge base with Foundry IQ**.
 
@@ -317,21 +290,28 @@ Then work through **Steps 6 to 9** to connect both existing indexes and create *
 2. Find **caldova-policy-knowledge-base** and **caldova-supply-chain-knowledge-base**. Inspect their knowledge sources. The first uses the policy file. The second uses that file plus **supplier-evidence-knowledge-source** and **sourcing-documents-knowledge-source**.
 3. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A `blob_path` is citation metadata and might not be a directly accessible link.
 
-## Optional: Query the knowledge base in the GitHub Copilot app
+## Use Foundry IQ in the GitHub Copilot app
 
-You can also query the same knowledge base from the GitHub Copilot app instead of Python. The notebook provides the MCP URL. Follow the app instructions here, not in the notebook.
+The knowledge base MCP endpoint uses a Search query key. First find the key in the Azure portal:
 
-1. In **part4-foundry-iq.ipynb**, run the cell under **Optional: Get the knowledge base MCP URL**. Keep the printed URL available.
-2. In the GitHub Copilot app, select **Customize**, then select **Add > MCP Server...**.
-3. Enter these values:
-   - **Server name**: +++caldova-kb+++
-   - **Server type**: **HTTP**, not Local/SSE
-   - **URL**: the complete URL printed by the notebook
-   - **Header name**: +++api-key+++
-   - **Header value**: the value of **AZURE_SEARCH_ADMIN_KEY** from your lab `.env` file
-4. Select **Add server**. Then select the **Installed** tab and confirm that **caldova-kb** appears under **MCP Servers**.
-5. Start a new chat and ask:
+1. Go back to the Azure portal in the browser.
+2. Search for +++ill344-search+++ in the top search bar, and open the Azure AI Search service in your resource group.
+3. Select **Security + networking > Keys**, and locate a key under **Manage query keys**. Keep this page open.
 
-   +++Compare Summit Dose's documented CALD-201 commitments across its Caldova RFP response, agreement amendment, and purchase order.+++
+In **part4-foundry-iq.ipynb**, run the cell under **Get the knowledge base MCP URL** and keep the printed URL available. You will switch between the app, Visual Studio Code, and the portal to copy and paste each value when it is needed.
+
+Then add the MCP server:
+
+1. In the GitHub Copilot app, select **Customize**, and then select **Add > MCP Server...**.
+2. Enter these values:
+    - **Server name**: +++foundry-iq+++
+    - **Server type**: HTTP
+    - **URL**: switch to Visual Studio Code, copy the complete URL printed by the notebook, and switch back to the app to paste it.
+3. Select **Add header**, and enter the name +++api-key+++. Switch to the Azure portal's **Keys** page, copy a key under **Manage query keys**, and switch back to the app to paste it as the header value.
+4. Select **Add server**, and then switch to the **Installed** tab. Under **MCP Servers**, confirm that the server is toggled on and has a green check mark.
+
+Then select **New** and ask:
+
++++Compare Summit Dose's documented CALD-201 commitments across its Caldova RFP response, agreement amendment, and purchase order.+++
 
 Once you have completed all four notebooks, select **Next** in Skillable to review the summary and next steps.

@@ -1,7 +1,7 @@
 ===
 # Summary
 
-Across four exercises, you gave agents Caldova context with Microsoft IQ: Web IQ for public guidance, Fabric IQ for structured supplier data, Work IQ for your Microsoft 365 work, and a Foundry IQ knowledge base over Caldova's documents. You inspected the original data, not just generated answers.
+Across four exercises, you gave agents Caldova context with Microsoft IQ: Web IQ for public guidance, Fabric IQ for structured supplier data, Work IQ for your Microsoft 365 work, and a Foundry IQ knowledge base over Caldova's documents. You inspected the original data, not just generated answers, and added each IQ to the GitHub Copilot app as an MCP server.
 
 ## What changed at each step
 
@@ -11,6 +11,7 @@ Across four exercises, you gave agents Caldova context with Microsoft IQ: Web IQ
 | 2 | An ontology query over MCP and a Fabric data agent that you created and published | Traced a substance-to-product relationship and compared a supplier trend with the lakehouse rows |
 | 3 | Work IQ reads, evidence retrieval, a decision meeting, and a follow-up with the approved purchase order | Matched synthesized claims to retrieved passages and kept email updates distinct from the purchase order |
 | 4 | A policy file source, two indexed sources, and knowledge bases with answer synthesis | Compared a shipment claim with its PDF and citation metadata |
+| All | MCP servers for Web IQ, Fabric IQ, Work IQ, and Foundry IQ in the GitHub Copilot app | Asked the same questions from a chat and compared the answers with the notebooks |
 
 ## Continue learning
 
@@ -28,7 +29,7 @@ Here are some ways to apply what you've learned:
 
 **Combine the IQs in one knowledge base** - Add Fabric IQ, Work IQ, and Web IQ as knowledge sources alongside the indexed documents, so agentic retrieval can plan across all of them.
 
-**Query from more MCP clients** - Connect the Web IQ, Fabric IQ, Work IQ, and knowledge base MCP endpoints to compatible clients such as GitHub Copilot CLI.
+**Query from more MCP clients** - Connect the same MCP endpoints you added to the GitHub Copilot app to other compatible clients, such as GitHub Copilot CLI.
 
 **Customize retrieval behavior** - Adjust reasoning effort levels and configure custom retrieval and answer instructions for specific sources.
 

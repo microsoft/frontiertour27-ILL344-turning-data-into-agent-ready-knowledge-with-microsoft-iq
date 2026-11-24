@@ -7,7 +7,7 @@ These instructions are for participants of the **instructor-led lab** **ILL344: 
 
 You are a Caldova procurement analyst investigating supplier risk. Give agents context with Microsoft IQ: find public guidance with Web IQ, query structured supplier data with Fabric IQ, read and act on your Microsoft 365 work with Work IQ, and build a Foundry IQ knowledge base over policy and document evidence. At every stage, verify which source supports the answer.
 
-Follow the [guided lab instructions](overview.md). Each exercise follows **inspect in the browser > run the notebook > verify the evidence**. The browser activities are part of the lab, not just environment setup.
+Follow the [guided lab instructions](overview.md). Each exercise follows **inspect in the browser > run the notebook > verify the evidence**, then adds the same IQ to the GitHub Copilot app as an MCP server. The browser activities are part of the lab, not just environment setup.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ To get the most out of this lab, you should have a basic understanding of the fo
 
 ## Get started
 
-Start with the [environment setup](overview.md#getting-started), then keep the guide open alongside Visual Studio Code:
+Start with the [environment setup](overview.md#sign-in-to-windows), then keep the guide open alongside Visual Studio Code:
 
 | Exercise | Browser activity | Notebook |
 | --- | --- | --- |
