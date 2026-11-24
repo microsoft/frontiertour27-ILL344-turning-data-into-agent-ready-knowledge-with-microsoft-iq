@@ -228,7 +228,7 @@ Your mailbox has three emails about CALD-201. Read them before asking Work IQ ab
    - **CALD-201 testing subcontractor - Piedmont evidence incomplete**
    - **Decision Friday: protect the CALD-201 April delivery**
 3. Identify an action owner, a deadline, and a decision that is still open. Keep the emails available for comparison with the answer.
-4. In File Explorer, open **Desktop > aitour-ILL344 > data > caldova > pdfs**. Open **PO-CAL-SUM-2026-1108.pdf** in Microsoft Edge and compare its delivery commitment with the delivery email.
+4. Switch to Visual Studio Code. In the **Explorer** pane, expand **data > caldova > pdfs**, open **PO-CAL-SUM-2026-1108.pdf**, and compare its delivery commitment with the delivery email.
 
 **Compare the dates:** Locate the proposed **12 May** release in the email and the approved **30 April** delivery commitment in the purchase order. Keep the two records available to check how the answers describe their different roles.
 
@@ -307,7 +307,7 @@ Foundry IQ knowledge bases run on Azure AI Search. Your search service already h
 1. In the Azure portal, search for +++ill344-search+++ in the top search bar and select your AI Search service (it will look like *ill344-search-.....*).
 2. Select **Search management > Indexes**. Note the two indexes, **supplier-evidence** and **sourcing-documents**, and their document counts. Each document is a chunk of a source file. If either index is missing or empty, ask a proctor before continuing.
 3. Open **supplier-evidence**, then open **Search explorer**. In the search text box, enter +++SHIP-VC-1026-BOS-FRA+++ and select **Search**. Inspect a result's **chunk**, **title**, **blob_path**, and page-number fields.
-4. In File Explorer, open **Desktop > aitour-ILL344 > data > caldova > pdfs**. Open **TL-VCL-1026.pdf** and **EXC-VC-1026-04.pdf** in Microsoft Edge. Find the temperature record and the disposition evidence.
+4. Switch to Visual Studio Code. In the **Explorer** pane, expand **data > caldova > pdfs**, and open **TL-VCL-1026.pdf** and **EXC-VC-1026-04.pdf**. Find the temperature record and the disposition evidence.
 5. Finally, open **CAL-POL-PUR-001.pdf** from the same folder and find an approval or escalation rule. Unlike the shipment records, this policy is not in either pre-created index. The notebook will introduce a file knowledge source and upload the policy directly.
 
 **Compare the records:** Follow the shipment identifier from the temperature logger to the investigation report. Find both the initial quarantine status and the final disposition. Keep these records open to check whether the generated answer distinguishes the two stages.
