@@ -72,8 +72,6 @@ In the exercises, you will connect the GitHub Copilot app to each IQ so you can 
 
     +++In two sentences, what does a procurement analyst at a pharmaceutical company do?+++
 
-Select **Next** to start **Exercise 1: Web IQ**.
-
 ===
 # Exercise 1: Web IQ
 
@@ -99,7 +97,7 @@ Then save the key so the notebook can use it:
 
 ## Call Web IQ from the notebook
 
-In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**. Use this same environment in every notebook in the lab.
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
 1. In Visual Studio Code, open **src > notebooks > part1-web-iq.ipynb**.
 2. Follow the notebook's instructions **from top to bottom** and run **Steps 1 to 5** in sequence. Wait for each cell to finish before starting the next. You list the Web IQ tools, then search web pages, images, and videos.
@@ -113,7 +111,7 @@ In the notebook, select **Select Kernel > Python Environments**, and choose the 
 ## Verify the evidence
 
 1. In the Step 3 results, pick a result from a peer-reviewed journal or a regulator. Open its URL in the browser and find the passage on the page.
-2. Note which questions about the shipment the web cannot answer, such as what happened to these 4,800 units. You will answer them from Caldova's own evidence in Exercise 4.
+2. Note which questions about the shipment the web cannot answer, such as what happened to these 4,800 units.
 
 ## Use Web IQ in the GitHub Copilot app
 
@@ -128,8 +126,6 @@ In the notebook, select **Select Kernel > Python Environments**, and choose the 
 Then select **New** and ask:
 
 +++Use Web IQ to find current guidance on what to check when a pharmaceutical shipment has a temperature excursion. Cite your sources.+++
-
-Once you have completed the notebook, select **Next** to continue to **Exercise 2: Fabric IQ**.
 
 ===
 # Exercise 2: Fabric IQ
@@ -156,8 +152,6 @@ Before calling Fabric IQ from code, explore the data and relationships in the Fa
 In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
 Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
-
-> [!Help] **Sign-in window:** If the sign-in window is hidden, minimize the other windows **inside the lab virtual machine** until you find it. Keep the outer browser hosting the Skillable lab open.
 
 - **Steps 2 and 3** call the ontology's MCP endpoint. The **ask_ontology** answer takes 30 to 60 seconds.
 - **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions.
@@ -204,8 +198,6 @@ Then select **New** and ask:
 
 +++How has Meridian API Works' OTIF changed over the last four weekly snapshots?+++
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 3: Work IQ**.
-
 ===
 # Exercise 3: Work IQ
 
@@ -235,8 +227,6 @@ Your mailbox has three emails about CALD-201. Read them before asking Work IQ ab
 In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
 Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 8**, signing in with the lab account when prompted. These steps only read data.
-
-> [!Help] **Sign-in window:** If the sign-in window is hidden, minimize the other windows **inside the lab virtual machine** until you find it. Keep the outer browser hosting the Skillable lab open.
 
 - **Step 3** uses **ask** for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
 - **Step 4** uses **retrieve** for the cited passages behind that answer.
@@ -290,14 +280,12 @@ Work IQ is available as a plugin, so you install it instead of adding the MCP se
 
     Confirm that Work IQ returns a summary of the sample emails. If sign-in still fails or the chat reports that the MCP server is not configured, let a proctor know.
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 4: Foundry IQ**.
-
 ===
 # Exercise 4: Foundry IQ
 
 Foundry IQ knowledge bases combine knowledge sources, such as search indexes and uploaded files, and use agentic retrieval to plan queries across them and return grounded answers with citations.
 
-Caldova's distribution team needs to decide whether goods can be distributed after the temperature excursion on shipment **SHIP-VC-1026-BOS-FRA**. In Exercise 1, you found public guidance. Now you will query a Foundry IQ knowledge base over Caldova's own documents to investigate what happened and find the final distribution decision.
+Caldova's distribution team needs to decide whether goods can be distributed after the temperature excursion on shipment **SHIP-VC-1026-BOS-FRA**. Now you will query a Foundry IQ knowledge base over Caldova's own documents to investigate what happened and find the final distribution decision.
 
 ## Inspect the documents before running code
 
@@ -358,4 +346,3 @@ Then select **New** and ask:
 
 +++Compare Summit Dose's documented CALD-201 commitments across its Caldova RFP response, agreement amendment, and purchase order.+++
 
-Once you have completed all four notebooks, select **Next** in Skillable to review the summary and next steps.
