@@ -2,7 +2,7 @@
 
 ## Overview
 
-Caldova is a fictional pharmaceutical company that makes and ships medicines through a network of suppliers and contract manufacturers. You join Caldova as a procurement analyst during a busy week. A shipment of 4,800 units ran above its temperature range on the way from Boston to Frankfurt. The supplier of an active ingredient has new invoice and quality records to review. And the move of product CALD-201 to a contract manufacturer depends on decisions that are still open in your inbox. To get answers you can trust, you need context from many places, and you need to know which source each answer came from.
+Caldova is a fictional pharmaceutical company. It owns its medicines and relies on a network of suppliers, contract manufacturers, and logistics partners to make and ship them. You join Caldova as a procurement analyst during a busy week. A shipment of 4,800 units ran above its temperature range on the way from Boston to Frankfurt. The supplier of an active ingredient has new invoice and quality records to review. And the move of product CALD-201 to a contract manufacturer depends on decisions that are still open in your inbox. To get answers you can trust, you need context from many places, and you need to know which source each answer came from.
 
 In this lab, you give AI agents that context with Microsoft IQ:
 
