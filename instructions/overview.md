@@ -26,7 +26,8 @@ Sign in to the virtual machine with these credentials:
 Your Azure resources, search indexes, Fabric items, Work IQ app registration, and sample emails are already created for you.
 
 1. In Visual Studio Code, select **Terminal > New Terminal**.
-2. Run this command to show the MCP server URLs that setup saved for you:
+2. Wait a few seconds for the Python virtual environment to be activated in the terminal.
+3. Run this command to show the MCP server URLs that setup saved for you:
 
     +++Get-Content .env | Select-String "MCP_URL"+++
 
@@ -66,10 +67,12 @@ In the exercises, you will connect the GitHub Copilot app to each IQ so you can 
 
     The agent answers from its own training data, without sources you can verify. In the next exercise, you give it Web IQ.
 
-Select **Next** to start **Exercise 1: Ground answers in the web with Web IQ**.
+Select **Next** to start **Exercise 1: Web IQ**.
 
 ===
-# Exercise 1: Ground answers in the web with Web IQ
+# Exercise 1: Web IQ
+
+Web IQ grounds answers in current web content.
 
 Shipment **SHIP-VC-1026-BOS-FRA** ran above its labelled temperature range. Before the distribution team reviews Caldova's own records, it wants current public guidance on handling temperature excursions. You will call Web IQ through MCP to find that guidance as citable passages.
 
@@ -91,11 +94,16 @@ Then save the key so the notebook can use it:
 
 ## Call Web IQ from the notebook
 
-1. In Visual Studio Code, open **src > notebooks > part1-web-iq.ipynb**.
-2. Select **Select Kernel > Python Environments**, then choose the environment at **.venv\Scripts\python.exe**. Use this same Python environment in the remaining exercises.
-3. Follow the notebook's instructions **from top to bottom** and run **Steps 1 to 5** in sequence. Wait for each cell to finish before starting the next.
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**. Use this same environment in every notebook in the lab.
 
-You list the Web IQ tools, then search web pages, images, and videos.
+1. In Visual Studio Code, open **src > notebooks > part1-web-iq.ipynb**.
+2. Follow the notebook's instructions **from top to bottom** and run **Steps 1 to 5** in sequence. Wait for each cell to finish before starting the next. You list the Web IQ tools, then search web pages, images, and videos.
+
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
 
 ## Verify the evidence
 
@@ -118,14 +126,18 @@ Then select **New** and ask the same question as before, this time with Web IQ:
 
 Compare the answer with the one from the setup. This time, each claim should link to a source you can open.
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 2: Query structured data with Fabric IQ**.
+Once you have completed the notebook, select **Next** to continue to **Exercise 2: Fabric IQ**.
 
 ===
-# Exercise 2: Query structured data with Fabric IQ
+# Exercise 2: Fabric IQ
+
+Fabric IQ gives agents structured business data from Microsoft Fabric. Your Fabric workspace has a Caldova lakehouse, an ontology over medicinal products, active substances, and manufacturers, and a published Fabric data agent over supplier performance.
 
 Caldova's procurement team has found Meridian API Works invoice and quality evidence for lot **AUR-API-7**, which contains Caldovexine (**SUB-001**). The team needs two kinds of structured answers: which products and manufacturers are related to the substance, and how Meridian API Works' delivery performance is trending. You will query the Fabric IQ ontology and a Fabric data agent through MCP.
 
 ## Explore the Fabric data
+
+Before calling Fabric IQ from code, explore the data and relationships in the Fabric portal. These items are already created for you. You don't need to create or edit them.
 
 1. In the browser, go to +++https://app.fabric.microsoft.com+++ and sign in with your lab account.
 2. Select **Workspaces** and open the workspace whose name starts with **CaldovaSupplyChain-**. If several are listed, match its workspace ID in the browser URL to **FABRIC_WORKSPACE_ID** in **.env**.
@@ -138,12 +150,20 @@ Caldova's procurement team has found Meridian API Works invoice and quality evid
 
 ## Call Fabric IQ from the notebook
 
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
+
 Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
 
-If the browser sign-in window is hidden, minimize other windows **inside the virtual machine**. Keep the outer browser hosting Skillable open.
+> [!Help] **Sign-in window:** If the sign-in window is hidden, minimize the other windows **inside the lab virtual machine** until you find it. Keep the outer browser hosting the Skillable lab open.
 
 - **Steps 2 and 3** call the ontology's MCP endpoint. The **ask_ontology** answer takes 30 to 60 seconds.
 - **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions.
+
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
 
 ## Verify the answers
 
@@ -181,16 +201,20 @@ Then select **New** and ask:
 
 +++How has Meridian API Works' OTIF changed over the last four weekly snapshots?+++
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 3: Bring in work context with Work IQ**.
+Once you have completed the notebook, select **Next** to continue to **Exercise 3: Work IQ**.
 
 ===
-# Exercise 3: Bring in work context with Work IQ
+# Exercise 3: Work IQ
+
+Work IQ gives agents your Microsoft 365 work context: email, meetings, files, chats, and people. It always uses your own permissions.
 
 Caldova's supply team has recent emails about Summit Dose equipment mapping, subcontractor approval, and delivery planning for **CALD-201**. You will use Work IQ to read that context as you, compare it with the approved purchase order, schedule the delivery decision, and send a follow-up.
 
 ## Read the source emails first
 
-1. In the browser, go to +++https://outlook.office.com+++ and sign in with your lab account.
+Your mailbox has three emails about CALD-201. Read them before asking Work IQ about them.
+
+1. In the browser, go to +++https://outlook.office.com+++ and sign in with your lab credentials if prompted.
 2. Open **Inbox** and search for +++CALD-201+++. Read these three sample emails:
    - **CALD-201 transfer checkpoint - equipment mapping approval needed**
    - **CALD-201 testing subcontractor - Piedmont evidence incomplete**
@@ -205,7 +229,11 @@ Caldova's supply team has recent emails about Summit Dose equipment mapping, sub
 
 ## Ask, retrieve, and discover
 
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
+
 Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 8**, signing in with the lab account when prompted. These steps only read data.
+
+> [!Help] **Sign-in window:** If the sign-in window is hidden, minimize the other windows **inside the lab virtual machine** until you find it. Keep the outer browser hosting the Skillable lab open.
 
 - **Step 3** uses **ask** for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
 - **Step 4** uses **retrieve** for the cited passages behind that answer.
@@ -221,7 +249,13 @@ The remaining cells **change real data in your lab mailbox and calendar without 
 4. Run **Step 12** to download the attachment from Sent Items with **fetch_blob** and confirm that it matches the file on disk.
 5. Run **Step 13** to delete the meeting. Refresh the calendar and confirm that the event is gone.
 
-When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, then check Outlook to see which actions have completed before continuing. If a write fails with a policy error, ask a proctor.
+When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, then check Outlook to see which actions have completed before continuing. A proctor can help if an action needs state from before the restart, or if a write fails with a policy error.
+
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
 
 ## Verify against your mailbox
 
@@ -253,17 +287,21 @@ Work IQ is available as a plugin, so you install it instead of adding the MCP se
 
     Confirm that Work IQ returns a summary of the sample emails. If sign-in still fails or the chat reports that the MCP server is not configured, let a proctor know.
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 4: Build a knowledge base with Foundry IQ**.
+Once you have completed the notebook, select **Next** to continue to **Exercise 4: Foundry IQ**.
 
 ===
-# Exercise 4: Build a knowledge base with Foundry IQ
+# Exercise 4: Foundry IQ
+
+Foundry IQ knowledge bases combine knowledge sources, such as search indexes and uploaded files, and use agentic retrieval to plan queries across them and return grounded answers with citations.
 
 Caldova's distribution team needs to decide whether goods can be distributed after the temperature excursion on shipment **SHIP-VC-1026-BOS-FRA**. In Exercise 1, you found public guidance. Now you will query a Foundry IQ knowledge base over Caldova's own documents to investigate what happened and find the final distribution decision.
 
 ## Inspect the documents before running code
 
+Foundry IQ knowledge bases run on Azure AI Search. Your search service already has two indexes of Caldova supplier and sourcing documents. Look at what's indexed and compare it with the original files before you build knowledge bases over them.
+
 1. In the Azure portal, search for +++ill344-search+++ in the top search bar and select your AI Search service (it will look like *ill344-search-.....*).
-2. Select **Search management > Indexes**. Confirm that **supplier-evidence** and **sourcing-documents** both show a nonzero document count. If either index is missing or empty, ask a proctor before continuing.
+2. Select **Search management > Indexes**. Note the two indexes, **supplier-evidence** and **sourcing-documents**, and their document counts. Each document is a chunk of a source file. If either index is missing or empty, ask a proctor before continuing.
 3. Open **supplier-evidence**, then open **Search explorer**. In the search text box, enter +++SHIP-VC-1026-BOS-FRA+++ and select **Search**. Inspect a result's **chunk**, **title**, **blob_path**, and page-number fields.
 4. In File Explorer, open **Desktop > aitour-ILL344 > data > caldova > pdfs**. Open **TL-VCL-1026.pdf** and **EXC-VC-1026-04.pdf** in Microsoft Edge. Find the temperature record and the disposition evidence.
 5. Finally, open **CAL-POL-PUR-001.pdf** from the same folder and find an approval or escalation rule. Unlike the shipment records, this policy is not in either pre-created index. The notebook will introduce a file knowledge source and upload the policy directly.
@@ -272,17 +310,26 @@ Caldova's distribution team needs to decide whether goods can be distributed aft
 
 ## Build and query the knowledge bases
 
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
+
 Open **src/notebooks/part4-foundry-iq.ipynb** and follow the notebook **from top to bottom**, running the code cells **in sequence**.
 
 Work through **Steps 1 to 5** to upload the policy and query the policy-only knowledge base. Allow about 40 seconds for file ingestion.
 
 Then work through **Steps 6 to 9** to connect both existing indexes and create **caldova-supply-chain-knowledge-base**. Run the shipment query, then the **activity log** and **references** cells.
 
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
+
 ## Verify what you built in the browser
 
 1. Return to your Azure AI Search service. Select **Agentic retrieval > Knowledge bases** and refresh the list.
 2. Find **caldova-policy-knowledge-base** and **caldova-supply-chain-knowledge-base**. Inspect their knowledge sources. The first uses the policy file. The second uses that file plus **supplier-evidence-knowledge-source** and **sourcing-documents-knowledge-source**.
-3. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A **blob_path** is citation metadata and might not be a directly accessible link.
+3. Select **Agentic retrieval > Knowledge sources**. Compare **file-docs-knowledge-source**, which the service indexed for you from the uploaded policy file, with **supplier-evidence-knowledge-source**, which points to the index you inspected earlier.
+4. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A **blob_path** is citation metadata and might not be a directly accessible link.
 
 ## Use Foundry IQ in the GitHub Copilot app
 

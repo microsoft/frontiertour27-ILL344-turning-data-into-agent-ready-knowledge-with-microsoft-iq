@@ -27,10 +27,10 @@ Start with the [environment setup](overview.md#sign-in-to-windows), then keep th
 
 | Exercise | Browser activity | Notebook |
 | --- | --- | --- |
-| [1. Web IQ](overview.md#exercise-1-ground-answers-in-the-web-with-web-iq) | Create a Web IQ API key and check a cited web passage on its source page | [part1-web-iq.ipynb](../src/notebooks/part1-web-iq.ipynb) |
-| [2. Fabric IQ](overview.md#exercise-2-query-structured-data-with-fabric-iq) | Explore lakehouse tables, the Fabric ontology, and the data agent | [part2-fabric-iq.ipynb](../src/notebooks/part2-fabric-iq.ipynb) |
-| [3. Work IQ](overview.md#exercise-3-bring-in-work-context-with-work-iq) | Read the seeded Outlook emails and the approved purchase order, then check each write in Outlook | [part3-work-iq.ipynb](../src/notebooks/part3-work-iq.ipynb) |
-| [4. Foundry IQ](overview.md#exercise-4-build-a-knowledge-base-with-foundry-iq) | Inspect PDFs, Search explorer results, and created knowledge bases | [part4-foundry-iq.ipynb](../src/notebooks/part4-foundry-iq.ipynb) |
+| [1. Web IQ](overview.md#exercise-1-web-iq) | Create a Web IQ API key and check a cited web passage on its source page | [part1-web-iq.ipynb](../src/notebooks/part1-web-iq.ipynb) |
+| [2. Fabric IQ](overview.md#exercise-2-fabric-iq) | Explore lakehouse tables, the Fabric ontology, and the data agent | [part2-fabric-iq.ipynb](../src/notebooks/part2-fabric-iq.ipynb) |
+| [3. Work IQ](overview.md#exercise-3-work-iq) | Read the seeded Outlook emails and the approved purchase order, then check each write in Outlook | [part3-work-iq.ipynb](../src/notebooks/part3-work-iq.ipynb) |
+| [4. Foundry IQ](overview.md#exercise-4-foundry-iq) | Inspect PDFs, Search explorer results, and created knowledge bases | [part4-foundry-iq.ipynb](../src/notebooks/part4-foundry-iq.ipynb) |
 
 Each notebook stands on its own, but the exercises follow one Caldova investigation, so run them in order. After all four exercises, continue to the [summary](summary.md).
 
