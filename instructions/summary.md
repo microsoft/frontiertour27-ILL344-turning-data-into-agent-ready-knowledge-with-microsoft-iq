@@ -1,38 +1,27 @@
 ===
 # Summary
 
-Across four exercises, you gave agents Caldova context with Microsoft IQ: Web IQ for public guidance, Fabric IQ for structured supplier data, Work IQ for your Microsoft 365 work, and a Foundry IQ knowledge base over Caldova's documents. You inspected the original data, not just generated answers, and added each IQ to the GitHub Copilot app as an MCP server.
+You helped Caldova's procurement team get through a busy week of supplier issues by giving AI agents the right context with Microsoft IQ:
 
-## What changed at each step
+- **Web IQ** found real-time guidance from the web on handling a temperature excursion during shipment.
+- **Fabric IQ** used the ontology to show which Caldova products contain Caldovexine and who makes it, and the data agent to show how Meridian API Works' delivery performance is trending.
+- **Work IQ** summarized the open CALD-201 decisions in your inbox, scheduled the delivery decision, and sent a follow-up with the approved purchase order attached.
+- **Foundry IQ** built a knowledge base over Caldova's purchasing policy and supplier documents to decide whether the 4,800 units could be distributed.
+- The **GitHub Copilot app** connected to each IQ as an MCP server, so you could ask the same kinds of questions from a chat.
 
-| Part | What you built | What you explored |
-| --- | --- | --- |
-| 1 | An MCP session to Web IQ with web, image, and video search | Compared a cited web passage with its source page and noted what the web cannot answer |
-| 2 | Ontology and data agent queries over MCP | Traced a substance-to-product relationship and compared a supplier trend with the lakehouse rows |
-| 3 | Work IQ reads, evidence retrieval, a decision meeting, and a follow-up with the approved purchase order | Matched synthesized claims to retrieved passages and kept email updates distinct from the purchase order |
-| 4 | A policy file source, two indexed sources, and knowledge bases with answer synthesis | Compared a shipment claim with its PDF and citation metadata |
-| All | MCP servers for Web IQ, Fabric IQ, Work IQ, and Foundry IQ in the GitHub Copilot app | Asked the same questions from a chat and compared the answers with the notebooks |
+Along the way, you checked each answer against the source it came from.
 
 ## Continue learning
 
-- [Microsoft Web IQ documentation](https://learn.microsoft.com/web-iq/) - Learn about the Web IQ APIs, passages, and the MCP server.
-- [What is Fabric IQ?](https://learn.microsoft.com/fabric/iq/overview) - Explore ontologies, data agents, and the other Fabric IQ capabilities.
-- [Work IQ MCP tool reference](https://learn.microsoft.com/microsoft-365/copilot/extensibility/work-iq/mcp/tool-reference) - Review every Work IQ tool, including **retrieve**, **discover**, and **fetch_blob**.
-- [Foundry IQ (Azure AI Search)](https://learn.microsoft.com/azure/search/) - Explore the full capabilities of Foundry IQ (Azure AI Search) and how it integrates with other Azure services.
-- [Create a knowledge base in Foundry IQ (Azure AI Search)](https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base) - Step-by-step guide to creating and configuring knowledge bases.
-- [Create a knowledge source](https://learn.microsoft.com/azure/search/search-knowledge-source-overview) - Understand how to create and configure different data sources, including Fabric IQ, Work IQ, and Web IQ knowledge sources.
-- [Use answer synthesis for citation-backed responses in Foundry IQ (Azure AI Search)](https://learn.microsoft.com/azure/search/search-agentic-retrieval-how-to-synthesize) - Learn how to generate grounded answers with citations using answer synthesis.
+- [Microsoft Web IQ documentation](https://learn.microsoft.com/en-us/web-iq/)
+- [What is Foundry IQ?](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/what-is-foundry-iq)
+- [What is Fabric IQ?](https://learn.microsoft.com/fabric/iq/overview)
+- [Work IQ MCP tool reference](https://learn.microsoft.com/microsoft-365/copilot/extensibility/work-iq/mcp/tool-reference)
+- [Agentic retrieval overview](https://learn.microsoft.com/azure/search/agentic-retrieval-overview)
+- [Microsoft IQ Live](https://aka.ms/MicrosoftIQLive)
+- [Microsoft IQ Series](https://github.com/microsoft/iq-series)
+- [Microsoft IQ Deep Dive](https://aka.ms/iqdeepdive)
 
-## Next steps
+## Try it on your own
 
-Here are some ways to apply what you've learned:
-
-**Combine the IQs in one knowledge base** - Add Fabric IQ, Work IQ, and Web IQ as knowledge sources alongside the indexed documents, so agentic retrieval can plan across all of them.
-
-**Query from more MCP clients** - Connect the same MCP endpoints you added to the GitHub Copilot app to other compatible clients, such as GitHub Copilot CLI.
-
-**Customize retrieval behavior** - Adjust reasoning effort levels and configure custom retrieval and answer instructions for specific sources.
-
-**Integrate with your data** - Replace the sample Caldova policy, procurement records, and supplier analytics with enterprise content you are authorized to use.
-
-The patterns you explored in this lab form the foundation for building agents that combine public web content, structured business data, workplace context, and indexed enterprise documents.
+Everything in this lab is in the [session repository](https://github.com/microsoft/frontiertour27-ILL344-turning-data-into-agent-ready-knowledge-with-microsoft-iq). To run it in your own Azure subscription, follow [Deploy to your own Azure subscription](https://github.com/microsoft/frontiertour27-ILL344-turning-data-into-agent-ready-knowledge-with-microsoft-iq/blob/main/deploy_yourself.md).

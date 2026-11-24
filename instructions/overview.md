@@ -2,11 +2,16 @@
 
 ## Overview
 
-In this lab, you give AI agents context with Microsoft IQ: **Web IQ** for the web, **Fabric IQ** for structured business data, **Work IQ** for your Microsoft 365 work, and a **Foundry IQ** knowledge base over your documents. For each IQ, you first call it from a Python notebook, most of them through Model Context Protocol (MCP), and then you add it as an MCP server in the GitHub Copilot app.
+Caldova is a fictional pharmaceutical company. It owns its medicines and relies on a network of suppliers, contract manufacturers, and logistics partners to make and ship them. You join Caldova as a procurement analyst during a busy week. A shipment of 4,800 units ran above its temperature range on the way from Boston to Frankfurt. The supplier of an active ingredient has new invoice and quality records to review. And the move of product CALD-201 to a contract manufacturer depends on decisions that are still open in your inbox. To get answers you can trust, you need context from many places, and you need to know which source each answer came from.
 
-The scenario is **Caldova**, a fictional pharmaceutical company. You are a procurement analyst investigating supplier issues: public cold-chain guidance on the web, supplier, product, and performance data in Fabric, CALD-201 emails in your mailbox, and purchasing policy, supplier records, and approved agreements in Azure AI Search.
+In this lab, you give AI agents that context with Microsoft IQ:
 
-Your job is not just to get an answer. It is to show **which evidence supports each claim**. An email about a possible delay is not an amended purchase order. A web article about cold-chain guidance is not Caldova's investigation report. For each exercise, **inspect the source in the browser, run the notebook, and compare the answer with the source**.
+- **Web IQ** finds real-time guidance from the web on handling temperature excursions during shipment.
+- **Fabric IQ** answers questions over Caldova's structured data in Microsoft Fabric, such as which products contain an active ingredient and how a supplier's delivery performance is trending.
+- **Work IQ** reads and acts on your Microsoft 365 work as you: the CALD-201 emails, a decision meeting, and a follow-up message.
+- **Foundry IQ** builds a knowledge base over Caldova's purchasing policy and supplier documents to decide whether the 4,800 units can be distributed.
+
+For each IQ, you call it from a Python notebook, and then you add it as an MCP server in the GitHub Copilot app so you can ask it questions from a chat.
 
 ## Sign in to Windows
 
@@ -28,7 +33,8 @@ Sign in to the virtual machine with these credentials:
 Your Azure resources, search indexes, Fabric items, Work IQ app registration, and sample emails are already created for you.
 
 1. In Visual Studio Code, select **Terminal > New Terminal**.
-2. Run this command to show the MCP server URLs that setup saved for you:
+2. Wait a few seconds for the Python virtual environment to be activated in the terminal.
+3. Run this command to show the MCP server URLs that setup saved for you:
 
     +++Get-Content .env | Select-String "MCP_URL"+++
 
@@ -64,16 +70,14 @@ In the exercises, you will connect the GitHub Copilot app to each IQ so you can 
 6. Return to the **GitHub Copilot** app. On the next screen, leave the folder selection empty and select **Continue**. You will use the app for chat and VS Code for working with the lab folder.
 7. Send a message to the agent in the chat box, such as:
 
-    +++What should I check when a pharmaceutical shipment has a temperature excursion?+++
-
-    The agent answers from its own training data, without sources you can verify. In the next exercise, you give it Web IQ.
-
-Select **Next** to start **Exercise 1: Ground answers in the web with Web IQ**.
+    +++In two sentences, what does a procurement analyst at a pharmaceutical company do?+++
 
 ===
-# Exercise 1: Ground answers in the web with Web IQ
+# Exercise 1: Web IQ
 
-Shipment **SHIP-VC-1026-BOS-FRA** ran above its labelled temperature range. Before the distribution team reviews Caldova's own records, it wants current public guidance on handling temperature excursions. You will call Web IQ through MCP to find that guidance as citable passages.
+Web IQ grounds answers in real-time web content.
+
+Shipment **SHIP-VC-1026-BOS-FRA** ran above its labelled temperature range. Before the distribution team reviews Caldova's own records, it wants real-time guidance from the web on handling temperature excursions. You will call Web IQ through MCP to find that guidance as citable passages.
 
 ## Get your Web IQ key
 
@@ -83,26 +87,31 @@ A Web IQ account was created for you in your resource group. Create an API key f
 2. In the sign-in prompt, select your lab account.
 3. In **Select an Azure Resource**, select your lab subscription for **Azure subscription**, and then select the resource that starts with **ill344-webiq-** for **Resource**. Select **Finish**.
 4. If a dialog invites you to try Web IQ in a playground, select **Skip**.
-5. On the profile management page, scroll to the bottom. Under **Authentication > API Keys**, select **Create API key**, enter any name, and select **Create**. Copy the new key.
+5. On the profile management page, scroll to the bottom. Under **Authentication > API Keys**, select **Create API key**. For the name, enter +++webiq+++, and then select **Create**. Copy the new key.
 
 Then save the key so the notebook can use it:
 
 1. In Visual Studio Code, open the **.env** file in the lab folder.
-2. Add a new line at the end of the file with **WEB_IQ_KEY=**, and paste the key after the equals sign. For example: **WEB_IQ_KEY=your-key**.
+2. Add a new line at the end of the file, enter +++WEB_IQ_KEY=+++, and paste the key right after the equals sign, with no spaces or quotes.
 3. Save the file.
 
 ## Call Web IQ from the notebook
 
-1. In Visual Studio Code, open **src > notebooks > part1-web-iq.ipynb**.
-2. Select **Select Kernel > Python Environments**, then choose the environment at **.venv\Scripts\python.exe**. Use this same Python environment in the remaining exercises.
-3. Follow the notebook's instructions **from top to bottom** and run **Steps 1 to 5** in sequence. Wait for each cell to finish before starting the next.
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
-You list the Web IQ tools, then search web pages, images, and videos.
+1. In Visual Studio Code, open **src > notebooks > part1-web-iq.ipynb**.
+2. Follow the notebook's instructions **from top to bottom** and run **Steps 1 to 5** in sequence. Wait for each cell to finish before starting the next. You list the Web IQ tools, then search web pages, images, and videos.
+
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
 
 ## Verify the evidence
 
 1. In the Step 3 results, pick a result from a peer-reviewed journal or a regulator. Open its URL in the browser and find the passage on the page.
-2. Note which questions about the shipment the web cannot answer, such as what happened to these 4,800 units. You will answer them from Caldova's own evidence in Exercise 4.
+2. Note which questions about the shipment the web cannot answer, such as what happened to these 4,800 units.
 
 ## Use Web IQ in the GitHub Copilot app
 
@@ -114,20 +123,20 @@ You list the Web IQ tools, then search web pages, images, and videos.
 3. Select **Add header**, and enter the name +++x-apikey+++. Switch to Visual Studio Code, copy the **WEB_IQ_KEY** value from **.env**, and then switch back to the app and paste it as the header value.
 4. Select **Add server**, and then switch to the **Installed** tab. Under **MCP Servers**, confirm that **web-iq** is toggled on and has a green check mark.
 
-Then select **New** and ask the same question as before, this time with Web IQ:
+Then select **New** and ask:
 
 +++Use Web IQ to find current guidance on what to check when a pharmaceutical shipment has a temperature excursion. Cite your sources.+++
 
-Compare the answer with the one from the setup. This time, each claim should link to a source you can open.
-
-Once you have completed the notebook, select **Next** to continue to **Exercise 2: Query structured data with Fabric IQ**.
-
 ===
-# Exercise 2: Query structured data with Fabric IQ
+# Exercise 2: Fabric IQ
+
+Fabric IQ gives agents structured business data from Microsoft Fabric. Your Fabric workspace has a Caldova lakehouse, an ontology over medicinal products, active substances, and manufacturers, and a published Fabric data agent over supplier performance.
 
 Caldova's procurement team has found Meridian API Works invoice and quality evidence for lot **AUR-API-7**, which contains Caldovexine (**SUB-001**). The team needs two kinds of structured answers: which products and manufacturers are related to the substance, and how Meridian API Works' delivery performance is trending. You will query the Fabric IQ ontology and a Fabric data agent through MCP.
 
 ## Explore the Fabric data
+
+Before calling Fabric IQ from code, explore the data and relationships in the Fabric portal. These items are already created for you. You don't need to create or edit them.
 
 1. In the browser, go to +++https://app.fabric.microsoft.com+++ and sign in with your lab account.
 2. Select **Workspaces** and open the workspace whose name starts with **CaldovaSupplyChain-**. If several are listed, match its workspace ID in the browser URL to **FABRIC_WORKSPACE_ID** in **.env**.
@@ -140,12 +149,18 @@ Caldova's procurement team has found Meridian API Works invoice and quality evid
 
 ## Call Fabric IQ from the notebook
 
-Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
-If the browser sign-in window is hidden, minimize other windows **inside the virtual machine**. Keep the outer browser hosting Skillable open.
+Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
 
 - **Steps 2 and 3** call the ontology's MCP endpoint. The **ask_ontology** answer takes 30 to 60 seconds.
 - **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions.
+
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
 
 ## Verify the answers
 
@@ -154,45 +169,60 @@ If the browser sign-in window is hidden, minimize other windows **inside the vir
 
 ## Use Fabric IQ in the GitHub Copilot app
 
-Add two MCP servers, one for the ontology and one for the data agent. Both sign you in with your Microsoft Entra account, so they don't need headers.
+Add two MCP servers, one for the ontology and one for the data agent, and test each one before adding the next. Both sign you in with your Microsoft Entra account, so they don't need headers.
 
 In Visual Studio Code, open the **.env** file in the lab folder and find **FABRIC_ONTOLOGY_MCP_URL** and **FABRIC_DATA_AGENT_MCP_URL**. Keep the file open so you can switch back to it when each URL is needed.
+
+### Add the ontology server
 
 1. In the GitHub Copilot app, select **Customize**, and then select **Add > MCP Server...**.
 2. Enter these values, and then select **Add server**:
     - **Server name**: +++fabric-iq-ontology+++
     - **Server type**: HTTP
     - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_ONTOLOGY_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
-3. Select **Add > MCP Server...** again, enter these values, and then select **Add server**:
-    - **Server name**: +++fabric-iq-data-agent+++
-    - **Server type**: HTTP
-    - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_DATA_AGENT_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
-4. Switch to the **Installed** tab. Under **MCP Servers**, find **fabric-iq-ontology** and select **Sign in**. A Microsoft Entra sign-in page opens in the browser. Sign in with:
+3. Switch to the **Installed** tab. Under **MCP Servers**, find **fabric-iq-ontology** and select **Sign in**. A Microsoft Entra sign-in page opens in the browser. Sign in with:
 
     - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
     - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
 
     At the **Enter Temporary Access Pass** screen, enter the pass above and select **Sign in**. Then return to the GitHub Copilot app.
 
-5. On the **Installed** tab, find **fabric-iq-data-agent**, select **Sign in**, and complete the sign-in in the browser the same way.
-6. Confirm that both servers are toggled on and each has a green check mark. If sign-in still fails, let a proctor know.
+4. Confirm that **fabric-iq-ontology** is toggled on and has a green check mark. If sign-in still fails, let a proctor know.
+5. Select **New** and ask:
 
-Then select **New** and ask:
+    +++Which Caldova medicinal products contain Caldovexine, and which manufacturers make it?+++
 
-+++Which Caldova medicinal products contain Caldovexine, and which manufacturers make it?+++
+### Add the data agent server
 
-+++How has Meridian API Works' OTIF changed over the last four weekly snapshots?+++
+1. Select **Customize**, and then select **Add > MCP Server...** again.
+2. Enter these values, and then select **Add server**:
+    - **Server name**: +++fabric-iq-data-agent+++
+    - **Server type**: HTTP
+    - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_DATA_AGENT_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
+3. On the **Installed** tab, find **fabric-iq-data-agent** and select **Sign in**. Complete the sign-in in the browser with the same lab credentials:
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 3: Bring in work context with Work IQ**.
+    - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
+    - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
+
+    At the **Enter Temporary Access Pass** screen, enter the pass above and select **Sign in**. Then return to the GitHub Copilot app.
+
+4. Confirm that **fabric-iq-data-agent** is toggled on and has a green check mark. If sign-in still fails, let a proctor know.
+5. Select **New** and ask:
+
+    +++How did Meridian API Works' OTIF change over the last four weekly snapshots?+++
 
 ===
-# Exercise 3: Bring in work context with Work IQ
+# Exercise 3: Work IQ
+
+Work IQ gives agents your Microsoft 365 work context: email, meetings, files, chats, and people. It always uses your own permissions.
 
 Caldova's supply team has recent emails about Summit Dose equipment mapping, subcontractor approval, and delivery planning for **CALD-201**. You will use Work IQ to read that context as you, compare it with the approved purchase order, schedule the delivery decision, and send a follow-up.
 
 ## Read the source emails first
 
-1. In the browser, go to +++https://outlook.office.com+++ and sign in with your lab account.
+Your mailbox has three emails about CALD-201. Read them before asking Work IQ about them.
+
+1. In the browser, go to +++https://outlook.office.com+++ and sign in with your lab credentials if prompted.
 2. Open **Inbox** and search for +++CALD-201+++. Read these three sample emails:
    - **CALD-201 transfer checkpoint - equipment mapping approval needed**
    - **CALD-201 testing subcontractor - Piedmont evidence incomplete**
@@ -205,25 +235,33 @@ Caldova's supply team has recent emails about Summit Dose equipment mapping, sub
 > [!NOTE]
 > These are fictional scenario dates, not deadlines relative to today's date. If the hosted mailbox is empty or the messages are missing, ask a proctor. Do not seed messages yourself or switch to your personal mailbox. If you self-deployed, use relevant messages you are authorized to access and adapt the questions.
 
-## Ask, retrieve, and discover
+## Ask, retrieve, and read
 
-Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 8**, signing in with the lab account when prompted. These steps only read data.
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
+
+Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 7**, signing in with the lab account when prompted. These steps only read data.
 
 - **Step 3** uses **ask** for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
 - **Step 4** uses **retrieve** for the cited passages behind that answer.
-- **Steps 5 to 8** use **discover**, **search_paths**, **get_schema**, **fetch**, and **list_agents**.
+- **Steps 5 to 7** use **search_paths**, **get_schema**, **fetch**, and **list_agents**.
 
 ## Act on your behalf
 
 The remaining cells **change real data in your lab mailbox and calendar without input prompts**. Run them one at a time and check the result in Outlook after each:
 
-1. Run **Step 9** to create the decision meeting. In Outlook, open **Calendar** and go to tomorrow. Find **CALD-201: decide on the weekend coating slot**, a 30-minute event at 15:00 UTC (Outlook shows it in your local time zone), and open it to see the agenda.
-2. Run **Step 10** to update the meeting and check your reminders. Refresh the calendar and confirm that the subject now ends with **and change control** and that the event is 45 minutes long.
-3. Run **Step 11** to send the follow-up. In Outlook, open your **Inbox** and find **CALD-201 follow-up: weekend coating slot decision** with the purchase order attached. It can take a minute to arrive. You can also find it in **Sent Items**.
-4. Run **Step 12** to download the attachment from Sent Items with **fetch_blob** and confirm that it matches the file on disk.
-5. Run **Step 13** to delete the meeting. Refresh the calendar and confirm that the event is gone.
+1. Run **Step 8** to create the decision meeting. In Outlook, open **Calendar** and go to tomorrow. Find **CALD-201: decide on the weekend coating slot**, a 30-minute event at 15:00 UTC (Outlook shows it in your local time zone), and open it to see the agenda.
+2. Run **Step 9** to update the meeting and check your reminders. Refresh the calendar and confirm that the subject now ends with **and change control** and that the event is 45 minutes long.
+3. Run **Step 10** to send the follow-up. In Outlook, open your **Inbox** and find **CALD-201 follow-up: weekend coating slot decision** with the purchase order attached. It can take a minute to arrive. You can also find it in **Sent Items**.
+4. Run **Step 11** to download the attachment from Sent Items with **fetch_blob** and confirm that it matches the file on disk.
+5. Run **Step 12** to delete the meeting. Refresh the calendar and confirm that the event is gone.
 
-When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, then check Outlook to see which actions have completed before continuing. If a write fails with a policy error, ask a proctor.
+When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, then check Outlook to see which actions have completed before continuing. A proctor can help if an action needs state from before the restart, or if a write fails with a policy error.
+
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
 
 ## Verify against your mailbox
 
@@ -255,17 +293,19 @@ Work IQ is available as a plugin, so you install it instead of adding the MCP se
 
     Confirm that Work IQ returns a summary of the sample emails. If sign-in still fails or the chat reports that the MCP server is not configured, let a proctor know.
 
-Once you have completed the notebook, select **Next** to continue to **Exercise 4: Build a knowledge base with Foundry IQ**.
-
 ===
-# Exercise 4: Build a knowledge base with Foundry IQ
+# Exercise 4: Foundry IQ
 
-Caldova's distribution team needs to decide whether goods can be distributed after the temperature excursion on shipment **SHIP-VC-1026-BOS-FRA**. In Exercise 1, you found public guidance. Now you will query a Foundry IQ knowledge base over Caldova's own documents to investigate what happened and find the final distribution decision.
+Foundry IQ knowledge bases combine knowledge sources, such as search indexes and uploaded files, and use agentic retrieval to plan queries across them and return grounded answers with citations.
+
+Caldova's distribution team needs to decide whether goods can be distributed after the temperature excursion on shipment **SHIP-VC-1026-BOS-FRA**. Now you will query a Foundry IQ knowledge base over Caldova's own documents to investigate what happened and find the final distribution decision.
 
 ## Inspect the documents before running code
 
+Foundry IQ knowledge bases run on Azure AI Search. Your search service already has two indexes of Caldova supplier and sourcing documents. Look at what's indexed and compare it with the original files before you build knowledge bases over them.
+
 1. In the Azure portal, search for +++ill344-search+++ in the top search bar and select your AI Search service (it will look like *ill344-search-.....*).
-2. Select **Search management > Indexes**. Confirm that **supplier-evidence** and **sourcing-documents** both show a nonzero document count. If either index is missing or empty, ask a proctor before continuing.
+2. Select **Search management > Indexes**. Note the two indexes, **supplier-evidence** and **sourcing-documents**, and their document counts. Each document is a chunk of a source file. If either index is missing or empty, ask a proctor before continuing.
 3. Open **supplier-evidence**, then open **Search explorer**. In the search text box, enter +++SHIP-VC-1026-BOS-FRA+++ and select **Search**. Inspect a result's **chunk**, **title**, **blob_path**, and page-number fields.
 4. In File Explorer, open **Desktop > aitour-ILL344 > data > caldova > pdfs**. Open **TL-VCL-1026.pdf** and **EXC-VC-1026-04.pdf** in Microsoft Edge. Find the temperature record and the disposition evidence.
 5. Finally, open **CAL-POL-PUR-001.pdf** from the same folder and find an approval or escalation rule. Unlike the shipment records, this policy is not in either pre-created index. The notebook will introduce a file knowledge source and upload the policy directly.
@@ -274,17 +314,26 @@ Caldova's distribution team needs to decide whether goods can be distributed aft
 
 ## Build and query the knowledge bases
 
+In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
+
 Open **src/notebooks/part4-foundry-iq.ipynb** and follow the notebook **from top to bottom**, running the code cells **in sequence**.
 
 Work through **Steps 1 to 5** to upload the policy and query the policy-only knowledge base. Allow about 40 seconds for file ingestion.
 
 Then work through **Steps 6 to 9** to connect both existing indexes and create **caldova-supply-chain-knowledge-base**. Run the shipment query, then the **activity log** and **references** cells.
 
+> [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
+>
+> 1. Select **Restart** from the notebook toolbar at the top. If that doesn't work:
+> 2. Select **Developer: Reload Window** from the VS Code command palette. If that doesn't work:
+> 3. Close VS Code completely and restart it. Reopen the lab folder and notebook. If cells still get stuck, let a proctor know.
+
 ## Verify what you built in the browser
 
 1. Return to your Azure AI Search service. Select **Agentic retrieval > Knowledge bases** and refresh the list.
 2. Find **caldova-policy-knowledge-base** and **caldova-supply-chain-knowledge-base**. Inspect their knowledge sources. The first uses the policy file. The second uses that file plus **supplier-evidence-knowledge-source** and **sourcing-documents-knowledge-source**.
-3. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A **blob_path** is citation metadata and might not be a directly accessible link.
+3. Select **Agentic retrieval > Knowledge sources**. Compare **file-docs-knowledge-source**, which the service indexed for you from the uploaded policy file, with **supplier-evidence-knowledge-source**, which points to the index you inspected earlier.
+4. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A **blob_path** is citation metadata and might not be a directly accessible link.
 
 ## Use Foundry IQ in the GitHub Copilot app
 
@@ -310,4 +359,3 @@ Then select **New** and ask:
 
 +++Compare Summit Dose's documented CALD-201 commitments across its Caldova RFP response, agreement amendment, and purchase order.+++
 
-Once you have completed all four notebooks, select **Next** in Skillable to review the summary and next steps.
