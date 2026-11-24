@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Sets up the Caldova Fabric lakehouse, medicinal-product ontology, and supplier data agent.
+    Sets up the Caldova Fabric lakehouse, medicinal-product ontology, SupplierSM semantic model, and data agent.
 .DESCRIPTION
     Creates a Python virtual environment, installs dependencies, and runs
     the Caldova provisioners using an existing workspace or deployed capacity.
@@ -88,9 +88,11 @@ if ($LabUserObjectId) { [Environment]::SetEnvironmentVariable("FABRIC_LAB_USER_O
 Push-Location $repoRoot
 $lakehouseScript = Join-Path $repoRoot "create-caldova-lakehouse.py"
 $ontologyScript = Join-Path $repoRoot "create-caldova-ontology.py"
+$semanticModelScript = Join-Path $repoRoot "create-caldova-semantic-model.py"
 $dataAgentScript = Join-Path $repoRoot "create-caldova-data-agent.py"
 if (-not (Test-Path $lakehouseScript)) { throw "create-caldova-lakehouse.py not found" }
 if (-not (Test-Path $ontologyScript)) { throw "create-caldova-ontology.py not found" }
+if (-not (Test-Path $semanticModelScript)) { throw "create-caldova-semantic-model.py not found" }
 if (-not (Test-Path $dataAgentScript)) { throw "create-caldova-data-agent.py not found" }
 
 & $venvPy $lakehouseScript
@@ -98,15 +100,21 @@ $exitCode = $LASTEXITCODE
 if ($exitCode -eq 0) {
     & $venvPy $ontologyScript
     $exitCode = $LASTEXITCODE
-    # The data agent only needs the lakehouse, so create it even if the ontology step failed.
-    & $venvPy $dataAgentScript
-    if ($exitCode -eq 0) { $exitCode = $LASTEXITCODE }
+    # The semantic model and data agent only need the lakehouse, so create them even if the
+    # ontology step failed. The data agent then runs without the ontology.
+    & $venvPy $semanticModelScript
+    $semanticModelExit = $LASTEXITCODE
+    if ($exitCode -eq 0) { $exitCode = $semanticModelExit }
+    if ($semanticModelExit -eq 0) {
+        & $venvPy $dataAgentScript
+        if ($exitCode -eq 0) { $exitCode = $LASTEXITCODE }
+    }
 }
 Pop-Location
 
 if ($exitCode -eq 0) {
     Write-Output ""
-    Write-Output "Lakehouse, ontology, and data agent setup completed successfully!"
+    Write-Output "Lakehouse, ontology, semantic model, and data agent setup completed successfully!"
 } else {
     Write-Output ""
     Write-Output "ERROR: Caldova Fabric setup failed. Review the output above for details."

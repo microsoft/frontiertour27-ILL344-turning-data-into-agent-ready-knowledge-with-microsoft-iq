@@ -130,7 +130,7 @@ Then select **New** and ask:
 ===
 # Exercise 2: Fabric IQ
 
-Fabric IQ gives agents structured business data from Microsoft Fabric. Your Fabric workspace has a Caldova lakehouse, an ontology over medicinal products, active substances, and manufacturers, and a published Fabric data agent over supplier performance.
+Fabric IQ gives agents structured business data from Microsoft Fabric. Your Fabric workspace has a Caldova lakehouse, an ontology over medicinal products, active substances, and manufacturers, a supplier performance semantic model, and a published Fabric data agent that uses both the ontology and the semantic model.
 
 Caldova's procurement team has found Meridian API Works invoice and quality evidence for lot **AUR-API-7**, which contains Caldovexine (**SUB-001**). The team needs two kinds of structured answers: which products and manufacturers are related to the substance, and how Meridian API Works' delivery performance is trending. You will query the Fabric IQ ontology and a Fabric data agent through MCP.
 
@@ -143,7 +143,13 @@ Before calling Fabric IQ from code, explore the data and relationships in the Fa
 3. Open **CaldovaSupplierAnalytics**, then expand **Schemas > dbo > Tables**. Preview **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**. Find **SUB-001** in the substance table and follow its ID through the linking table to a product.
 4. Preview **DimSupplier** and **SupplierPerformance**. Find the **SupplierID** for Meridian API Works and look at a few of its weekly rows. Notice the **OTIF12moPct** and **BatchRejectionRatePct** columns.
 5. Return to the workspace and open **CaldovaMedicinalProductOntology**. Inspect **MedicinalProduct**, **ActiveSubstance**, and **Manufacturer**, and the **contains** and **manufactures** relationships. The ontology gives business meaning to the table relationships.
-6. Return to the workspace and open **CaldovaSupplierDataAgent**. In the **Explorer** pane, expand **CaldovaSupplierAnalytics** and see which tables are selected. Open the agent's instructions to see how it should join the tables and present the metrics. The data agent answers analytical questions over these tables in natural language.
+6. Return to the workspace and open the **SupplierSM** semantic model. Explore the relationship diagram and follow the line from **SupplierPerformance** to **DimSupplier**. In the **Data** pane, expand **SupplierPerformance** and find the **Latest OTIF %** and **OTIF % Delta 4 Weeks** measures. For this step, focus on how the model turns weekly rows into ready-made metrics.
+7. Return to the workspace and open **CaldovaSupplierDataAgent**. Review its data sources: **SupplierSM** and **CaldovaMedicinalProductOntology**. Open the agent's instructions to see which source answers which kind of question, and how it joins a manufacturer in the ontology to a supplier in **SupplierSM** by ID.
+8. In the data agent's chat pane, ask:
+
+    +++Which approved manufacturers make Caldovexine, and what is each one's latest OTIF?+++
+
+    Wait for the answer, then review the steps the data agent shows for it. Find the query it ran against the ontology and the one it ran against **SupplierSM**.
 
 **Trace the relationship:** Use **ProductActiveSubstance** to connect **SUB-001** to a medicinal product. Keep that relationship and Meridian API Works' rows available to compare with the notebook's answers.
 
@@ -151,10 +157,11 @@ Before calling Fabric IQ from code, explore the data and relationships in the Fa
 
 In the notebook, select **Select Kernel > Python Environments**, and choose the **.venv** environment with the path **.venv\Scripts\python.exe**.
 
-Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
+Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 7** in order, signing in with the same lab account when prompted.
 
 - **Steps 2 and 3** call the ontology's MCP endpoint. The **ask_ontology** answer takes 30 to 60 seconds.
-- **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions.
+- **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions from **SupplierSM**.
+- **Step 7** asks the data agent a question that needs both the ontology and **SupplierSM**.
 
 > [!Hint] **Troubleshooting:** If code cells get stuck and keep spinning, try these remediation steps:
 >
@@ -166,6 +173,7 @@ Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, 
 
 1. Open a deep link from the data agent's answer, inspect the generated query, and compare Meridian API Works' latest values with the **SupplierPerformance** rows you previewed.
 2. Compare the ontology's product answer with the **SUB-001** relationship you traced in the lakehouse.
+3. Compare the manufacturers in the Step 7 answer with the ones the ontology returned in Step 3, and with the answer you got in the Fabric data agent's chat pane.
 
 ## Use Fabric IQ in the GitHub Copilot app
 

@@ -27,6 +27,7 @@ if ($env:FABRIC_WORKSPACE_ID -or $env:FABRIC_CAPACITY_ID) {
     Write-Host "Setting up Fabric Lakehouse..."
     python infra\create-caldova-lakehouse.py
     python infra\create-caldova-ontology.py
+    python infra\create-caldova-semantic-model.py
     python infra\create-caldova-data-agent.py
 }
 
