@@ -63,9 +63,7 @@ In the exercises, you will connect the GitHub Copilot app to each IQ so you can 
 6. Return to the **GitHub Copilot** app. On the next screen, leave the folder selection empty and select **Continue**. You will use the app for chat and VS Code for working with the lab folder.
 7. Send a message to the agent in the chat box, such as:
 
-    +++What should I check when a pharmaceutical shipment has a temperature excursion?+++
-
-    The agent answers from its own training data, without sources you can verify. In the next exercise, you give it Web IQ.
+    +++Write a short haiku about a supply chain that runs on time.+++
 
 Select **Next** to start **Exercise 1: Web IQ**.
 
@@ -120,11 +118,9 @@ In the notebook, select **Select Kernel > Python Environments**, and choose the 
 3. Select **Add header**, and enter the name +++x-apikey+++. Switch to Visual Studio Code, copy the **WEB_IQ_KEY** value from **.env**, and then switch back to the app and paste it as the header value.
 4. Select **Add server**, and then switch to the **Installed** tab. Under **MCP Servers**, confirm that **web-iq** is toggled on and has a green check mark.
 
-Then select **New** and ask the same question as before, this time with Web IQ:
+Then select **New** and ask:
 
 +++Use Web IQ to find current guidance on what to check when a pharmaceutical shipment has a temperature excursion. Cite your sources.+++
-
-Compare the answer with the one from the setup. This time, each claim should link to a source you can open.
 
 Once you have completed the notebook, select **Next** to continue to **Exercise 2: Fabric IQ**.
 
