@@ -2,13 +2,16 @@
 # after az login: deploy, poll, fetch outputs, run setup.
 # This lets the Skillable lifecycle action exit quickly (< 600s).
 
-$bgScriptPath = "C:\Users\LabUser\Desktop\deploy-background.ps1"
-$logFile = "C:\Users\LabUser\Desktop\lifecycle-log.txt"
+# Keep lifecycle files off the attendee desktop.
+$labFilesPath = "C:\LabFiles\ILL344"
+New-Item -ItemType Directory -Force -Path $labFilesPath | Out-Null
+$bgScriptPath = Join-Path $labFilesPath "deploy-background.ps1"
+$logFile = "C:\LabFiles\ILL344\lifecycle-log.txt"
 
 $bgScript = @'
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $env:PYTHONIOENCODING = "utf-8"
-$logFile = "C:\Users\LabUser\Desktop\lifecycle-log.txt"
+$logFile = "C:\LabFiles\ILL344\lifecycle-log.txt"
 function Log {
     param([string]$msg)
     $line = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] $msg"

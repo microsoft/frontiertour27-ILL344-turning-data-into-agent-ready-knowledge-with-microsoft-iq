@@ -1,6 +1,6 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $env:PYTHONIOENCODING = "utf-8"
-$logFile = "C:\Users\LabUser\Desktop\lifecycle-log.txt"
+$logFile = "C:\LabFiles\ILL344\lifecycle-log.txt"
 function Log {
     param([string]$msg)
     $line = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] $msg"
