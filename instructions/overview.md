@@ -28,13 +28,11 @@ Sign in to the virtual machine with these credentials:
 Your Azure resources, search indexes, Fabric items, Work IQ app registration, and sample emails are already created for you.
 
 1. In Visual Studio Code, select **Terminal > New Terminal**.
-2. Run this command to show the settings that setup saved for you:
+2. Run this command to show the MCP server URL that setup saved for you:
 
-    +++Get-Content .env | Select-String "SEARCH_SERVICE_ENDPOINT|MCP_URL|WORK_IQ_ENTRA_APP_ID"+++
+    +++Get-Content .env | Select-String "MCP_URL"+++
 
-    You should see three lines: **AZURE_SEARCH_SERVICE_ENDPOINT**, **FABRIC_ONTOLOGY_MCP_URL**, and **WORK_IQ_ENTRA_APP_ID**. If any are missing, let a proctor know.
-
-You will add **WEB_IQ_KEY** to the same file in the Web IQ exercise, and the Fabric IQ notebook adds **FABRIC_DATA_AGENT_MCP_URL**. Keep keys and tokens private. Do not paste `.env` contents into chat, screenshots, or shared notes.
+    You should see **FABRIC_ONTOLOGY_MCP_URL**. If it's missing, let a proctor know. You get the other MCP server details during the exercises.
 
 ### Sign in to the Azure portal
 
