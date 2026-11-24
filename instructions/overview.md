@@ -70,7 +70,7 @@ In the exercises, you will connect the GitHub Copilot app to each IQ so you can 
 6. Return to the **GitHub Copilot** app. On the next screen, leave the folder selection empty and select **Continue**. You will use the app for chat and VS Code for working with the lab folder.
 7. Send a message to the agent in the chat box, such as:
 
-    +++Write a short haiku about a supply chain that runs on time.+++
+    +++In two sentences, what does a procurement analyst at a pharmaceutical company do?+++
 
 Select **Next** to start **Exercise 1: Web IQ**.
 
