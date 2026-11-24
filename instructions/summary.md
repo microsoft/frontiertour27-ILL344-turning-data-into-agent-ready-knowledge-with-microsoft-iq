@@ -18,6 +18,7 @@ You built context-aware AI with Microsoft IQ:
 - [Agentic retrieval overview](https://learn.microsoft.com/azure/search/agentic-retrieval-overview)
 - [Microsoft IQ Live](https://aka.ms/MicrosoftIQLive)
 - [Microsoft IQ Series](https://github.com/microsoft/iq-series)
+- [Microsoft IQ Deep Dive](https://aka.ms/iqdeepdive)
 
 ## Try it on your own
 
