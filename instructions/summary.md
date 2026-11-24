@@ -8,7 +8,7 @@ Across four exercises, you gave agents Caldova context with Microsoft IQ: Web IQ
 | Part | What you built | What you explored |
 | --- | --- | --- |
 | 1 | An MCP session to Web IQ with web, image, and video search | Compared a cited web passage with its source page and noted what the web cannot answer |
-| 2 | An ontology query over MCP and a Fabric data agent that you created and published | Traced a substance-to-product relationship and compared a supplier trend with the lakehouse rows |
+| 2 | Ontology and data agent queries over MCP | Traced a substance-to-product relationship and compared a supplier trend with the lakehouse rows |
 | 3 | Work IQ reads, evidence retrieval, a decision meeting, and a follow-up with the approved purchase order | Matched synthesized claims to retrieved passages and kept email updates distinct from the purchase order |
 | 4 | A policy file source, two indexed sources, and knowledge bases with answer synthesis | Compared a shipment claim with its PDF and citation metadata |
 | All | MCP servers for Web IQ, Fabric IQ, Work IQ, and Foundry IQ in the GitHub Copilot app | Asked the same questions from a chat and compared the answers with the notebooks |
@@ -17,7 +17,7 @@ Across four exercises, you gave agents Caldova context with Microsoft IQ: Web IQ
 
 - [Microsoft Web IQ documentation](https://learn.microsoft.com/web-iq/) - Learn about the Web IQ APIs, passages, and the MCP server.
 - [What is Fabric IQ?](https://learn.microsoft.com/fabric/iq/overview) - Explore ontologies, data agents, and the other Fabric IQ capabilities.
-- [Work IQ MCP tool reference](https://learn.microsoft.com/microsoft-365/copilot/extensibility/work-iq/mcp/tool-reference) - Review every Work IQ tool, including `retrieve`, `discover`, and `fetch_blob`.
+- [Work IQ MCP tool reference](https://learn.microsoft.com/microsoft-365/copilot/extensibility/work-iq/mcp/tool-reference) - Review every Work IQ tool, including **retrieve**, **discover**, and **fetch_blob**.
 - [Foundry IQ (Azure AI Search)](https://learn.microsoft.com/azure/search/) - Explore the full capabilities of Foundry IQ (Azure AI Search) and how it integrates with other Azure services.
 - [Create a knowledge base in Foundry IQ (Azure AI Search)](https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base) - Step-by-step guide to creating and configuring knowledge bases.
 - [Create a knowledge source](https://learn.microsoft.com/azure/search/search-knowledge-source-overview) - Understand how to create and configure different data sources, including Fabric IQ, Work IQ, and Web IQ knowledge sources.

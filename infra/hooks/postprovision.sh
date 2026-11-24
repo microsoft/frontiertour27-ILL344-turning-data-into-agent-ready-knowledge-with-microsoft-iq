@@ -24,6 +24,7 @@ if [ -n "$FABRIC_WORKSPACE_ID" ] || [ -n "$FABRIC_CAPACITY_ID" ]; then
     echo "Setting up Fabric Lakehouse..."
     python3 infra/create-caldova-lakehouse.py
     python3 infra/create-caldova-ontology.py
+    python3 infra/create-caldova-data-agent.py
 fi
 
 # Note: Email seeding (seed-emails.ps1) requires a service principal with

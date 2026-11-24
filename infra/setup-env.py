@@ -38,6 +38,12 @@ openai_key = post(
     f"/listKeys?api-version=2023-05-01"
 )["key1"]
 
+# Part 4 creates this knowledge base. The MCP URL is saved now so the lab can check it during setup.
+search_endpoint = os.environ["AZURE_SEARCH_SERVICE_ENDPOINT"].rstrip("/")
+foundry_iq_mcp_url = (
+    f"{search_endpoint}/knowledgebases/caldova-supply-chain-knowledge-base/mcp?api-version=2026-05-01-preview"
+)
+
 # Write .env with all values
 env_path = Path(__file__).parents[1] / ".env"
 env_path.write_text(
@@ -45,6 +51,7 @@ env_path.write_text(
 # Foundry IQ (Azure AI Search) Configuration
 AZURE_SEARCH_SERVICE_ENDPOINT={os.environ['AZURE_SEARCH_SERVICE_ENDPOINT']}
 AZURE_SEARCH_ADMIN_KEY={search_key}
+FOUNDRY_IQ_MCP_URL={foundry_iq_mcp_url}
 
 # Azure OpenAI Configuration
 AZURE_OPENAI_ENDPOINT={os.environ['AZURE_OPENAI_ENDPOINT']}
