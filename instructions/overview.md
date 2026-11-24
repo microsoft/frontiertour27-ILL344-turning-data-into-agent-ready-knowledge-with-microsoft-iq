@@ -169,34 +169,47 @@ Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, 
 
 ## Use Fabric IQ in the GitHub Copilot app
 
-Add two MCP servers, one for the ontology and one for the data agent. Both sign you in with your Microsoft Entra account, so they don't need headers.
+Add two MCP servers, one for the ontology and one for the data agent, and test each one before adding the next. Both sign you in with your Microsoft Entra account, so they don't need headers.
 
 In Visual Studio Code, open the **.env** file in the lab folder and find **FABRIC_ONTOLOGY_MCP_URL** and **FABRIC_DATA_AGENT_MCP_URL**. Keep the file open so you can switch back to it when each URL is needed.
+
+### Add the ontology server
 
 1. In the GitHub Copilot app, select **Customize**, and then select **Add > MCP Server...**.
 2. Enter these values, and then select **Add server**:
     - **Server name**: +++fabric-iq-ontology+++
     - **Server type**: HTTP
     - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_ONTOLOGY_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
-3. Select **Add > MCP Server...** again, enter these values, and then select **Add server**:
-    - **Server name**: +++fabric-iq-data-agent+++
-    - **Server type**: HTTP
-    - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_DATA_AGENT_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
-4. Switch to the **Installed** tab. Under **MCP Servers**, find **fabric-iq-ontology** and select **Sign in**. A Microsoft Entra sign-in page opens in the browser. Sign in with:
+3. Switch to the **Installed** tab. Under **MCP Servers**, find **fabric-iq-ontology** and select **Sign in**. A Microsoft Entra sign-in page opens in the browser. Sign in with:
 
     - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
     - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
 
     At the **Enter Temporary Access Pass** screen, enter the pass above and select **Sign in**. Then return to the GitHub Copilot app.
 
-5. On the **Installed** tab, find **fabric-iq-data-agent**, select **Sign in**, and complete the sign-in in the browser the same way.
-6. Confirm that both servers are toggled on and each has a green check mark. If sign-in still fails, let a proctor know.
+4. Confirm that **fabric-iq-ontology** is toggled on and has a green check mark. If sign-in still fails, let a proctor know.
+5. Select **New** and ask:
 
-Then select **New** and ask:
+    +++Use the Fabric IQ ontology to find which Caldova medicinal products contain Caldovexine and which manufacturers make it.+++
 
-+++Which Caldova medicinal products contain Caldovexine, and which manufacturers make it?+++
+### Add the data agent server
 
-+++How has Meridian API Works' OTIF changed over the last four weekly snapshots?+++
+1. Select **Customize**, and then select **Add > MCP Server...** again.
+2. Enter these values, and then select **Add server**:
+    - **Server name**: +++fabric-iq-data-agent+++
+    - **Server type**: HTTP
+    - **URL**: switch to Visual Studio Code, copy the complete **FABRIC_DATA_AGENT_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
+3. On the **Installed** tab, find **fabric-iq-data-agent** and select **Sign in**. Complete the sign-in in the browser with the same lab credentials:
+
+    - **Username**: +++@lab.CloudPortalCredential(User1).Username+++
+    - **Temporary Access Pass**: +++@lab.CloudPortalCredential(User1).AccessToken+++
+
+    At the **Enter Temporary Access Pass** screen, enter the pass above and select **Sign in**. Then return to the GitHub Copilot app.
+
+4. Confirm that **fabric-iq-data-agent** is toggled on and has a green check mark. If sign-in still fails, let a proctor know.
+5. Select **New** and ask:
+
+    +++Use the Fabric IQ data agent to show how Meridian API Works' OTIF changed over the last four weekly snapshots.+++
 
 ===
 # Exercise 3: Work IQ
