@@ -153,7 +153,7 @@ In the notebook, select **Select Kernel > Python Environments**, and choose the 
 
 Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
 
-> [!Help] **Sign-in window:** If the sign-in window is hidden, minimize the other windows **inside the lab virtual machine** until you find it. Keep the outer browser hosting the Skillable lab open.
+> [!Help] **Sign-in window:** The Windows sign-in window can open behind your other windows. If you don't see it, minimize the other windows **inside the lab virtual machine** until you find it, and keep the outer browser hosting the Skillable lab open. If Windows asks whether to stay signed in to all your apps, select **No, sign in to this app only**.
 
 - **Steps 2 and 3** call the ontology's MCP endpoint. The **ask_ontology** answer takes 30 to 60 seconds.
 - **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions.
@@ -243,7 +243,7 @@ In the notebook, select **Select Kernel > Python Environments**, and choose the 
 
 Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 7**, signing in with the lab account when prompted. These steps only read data.
 
-> [!Help] **Sign-in window:** If the sign-in window is hidden, minimize the other windows **inside the lab virtual machine** until you find it. Keep the outer browser hosting the Skillable lab open.
+> [!Help] **Sign-in window:** The Windows sign-in window can open behind your other windows. If you don't see it, minimize the other windows **inside the lab virtual machine** until you find it, and keep the outer browser hosting the Skillable lab open. If Windows asks whether to stay signed in to all your apps, select **No, sign in to this app only**.
 
 - **Step 3** uses **ask** for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
 - **Step 4** uses **retrieve** for the cited passages behind that answer.
