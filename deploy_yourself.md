@@ -53,7 +53,7 @@ This will:
 - Provision all Azure resources (AI Search, Foundry project, OpenAI models, Fabric capacity, Web IQ account)
 - Fetch API keys and write a `.env` file with all required variables
 - Create search indexes and upload sample data
-- Set up the `CaldovaSupplierAnalytics` lakehouse, `CaldovaMedicinalProductOntology`, and `CaldovaSupplierDataAgent`
+- Set up the `CaldovaSupplierAnalytics` lakehouse, `CaldovaMedicinalProductOntology`, the `SupplierSM` semantic model, and `CaldovaSupplierDataAgent`
 
 To skip the Web IQ account, run `azd env set DEPLOY_WEB_IQ false` before `azd up` and skip Part 1.
 
@@ -65,7 +65,7 @@ To skip the Web IQ account, run `azd env set DEPLOY_WEB_IQ false` before `azd up
 
 Web IQ API keys are created in the Web IQ portal, not by Azure. Go to [Web IQ profile management](https://webiq.microsoft.ai/profiles), connect the `ill344-webiq-...` account in your resource group, create an API key under **Authentication > API Keys**, and add it to `.env` as `WEB_IQ_KEY`.
 
-`azd up` also creates and publishes the `CaldovaSupplierDataAgent` Fabric data agent used in Part 2, and writes all three MCP URLs (`FOUNDRY_IQ_MCP_URL`, `FABRIC_ONTOLOGY_MCP_URL`, `FABRIC_DATA_AGENT_MCP_URL`) to `.env`.
+`azd up` also creates and publishes the `CaldovaSupplierDataAgent` Fabric data agent used in Part 2, with `SupplierSM` and the ontology as its data sources, and writes all three MCP URLs (`FOUNDRY_IQ_MCP_URL`, `FABRIC_ONTOLOGY_MCP_URL`, `FABRIC_DATA_AGENT_MCP_URL`) to `.env`.
 
 ### 5. Start the Lab
 
