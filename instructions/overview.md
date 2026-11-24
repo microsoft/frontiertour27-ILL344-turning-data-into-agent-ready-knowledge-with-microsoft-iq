@@ -140,12 +140,13 @@ Before calling Fabric IQ from code, explore the data and relationships in the Fa
 
 1. In the browser, go to +++https://app.fabric.microsoft.com+++ and sign in with your lab account.
 2. Select **Workspaces** and open the workspace whose name starts with **CaldovaSupplyChain-**. If several are listed, match its workspace ID in the browser URL to **FABRIC_WORKSPACE_ID** in **.env**.
-3. Open **CaldovaSupplierAnalytics**, then expand **Schemas > dbo > Tables**. Preview **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**. Find **SUB-001** in the substance table and follow its ID through the linking table to a product.
-4. Preview **DimSupplier** and **SupplierPerformance**. Find the **SupplierID** for Meridian API Works and look at a few of its weekly rows. Notice the **OTIF12moPct** and **BatchRejectionRatePct** columns.
-5. Return to the workspace and open **CaldovaMedicinalProductOntology**. Inspect **MedicinalProduct**, **ActiveSubstance**, and **Manufacturer**, and the **contains** and **manufactures** relationships. The ontology gives business meaning to the table relationships.
-6. Return to the workspace and open the **SupplierSM** semantic model. Explore the relationship diagram and follow the line from **SupplierPerformance** to **DimSupplier**. In the **Data** pane, expand **SupplierPerformance** and find the **Latest OTIF %** and **OTIF % Delta 4 Weeks** measures. For this step, focus on how the model turns weekly rows into ready-made metrics.
-7. Return to the workspace and open **CaldovaSupplierDataAgent**. Review its data sources: **SupplierSM** and **CaldovaMedicinalProductOntology**. Open the agent's instructions to see which source answers which kind of question, and how it joins a manufacturer in the ontology to a supplier in **SupplierSM** by ID.
-8. In the data agent's chat pane, ask:
+3. Open **CaldovaSupplierAnalytics**, then expand **Schemas > dbo > Tables** and preview these tables:
+    - **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**: find **SUB-001** and follow its ID through the linking table to a product.
+    - **DimSupplier** and **SupplierPerformance**: find the **SupplierID** for Meridian API Works and look at a few of its weekly rows. Notice the **OTIF12moPct** and **BatchRejectionRatePct** columns.
+4. Return to the workspace and open **CaldovaMedicinalProductOntology**. Inspect **MedicinalProduct**, **ActiveSubstance**, and **Manufacturer**, and the **contains** and **manufactures** relationships. The ontology gives business meaning to the table relationships.
+5. Return to the workspace and open the **SupplierSM** semantic model. Explore the relationship diagram and follow the line from **SupplierPerformance** to **DimSupplier**. In the **Data** pane, expand **SupplierPerformance** and find the **Latest OTIF %** and **OTIF % Delta 4 Weeks** measures. For this step, focus on how the model turns weekly rows into ready-made metrics.
+6. Return to the workspace and open **CaldovaSupplierDataAgent**. Review its data sources: **SupplierSM** and **CaldovaMedicinalProductOntology**. Open the agent's instructions to see which source answers which kind of question, and how it joins a manufacturer in the ontology to a supplier in **SupplierSM** by ID.
+7. In the data agent's chat pane, ask:
 
     +++Which approved manufacturers make Caldovexine, and what is each one's latest OTIF?+++
 
@@ -173,7 +174,7 @@ Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 7** in order, 
 
 1. Open a deep link from the data agent's answer, inspect the generated query, and compare Meridian API Works' latest values with the **SupplierPerformance** rows you previewed.
 2. Compare the ontology's product answer with the **SUB-001** relationship you traced in the lakehouse.
-3. Compare the manufacturers in the Step 7 answer with the ones the ontology returned in Step 3, and with the answer you got in the Fabric data agent's chat pane.
+3. Compare the manufacturers in the notebook's Step 7 answer with the ones the ontology returned in the notebook's Step 3, and with the answer you got in the Fabric data agent's chat pane.
 
 ## Use Fabric IQ in the GitHub Copilot app
 
