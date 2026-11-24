@@ -2,9 +2,16 @@
 
 ## Overview
 
-In this lab, you give AI agents context with Microsoft IQ: Web IQ for the web, Fabric IQ for structured business data, Work IQ for your Microsoft 365 work, and Foundry IQ for your documents. For each IQ, you call it from a Python notebook, and then you add it as an MCP server in the GitHub Copilot app so you can ask it questions from a chat.
+Caldova is a fictional pharmaceutical company that makes and ships medicines through a network of suppliers and contract manufacturers. You join Caldova as a procurement analyst during a busy week. A shipment of 4,800 units ran above its temperature range on the way from Boston to Frankfurt. The supplier of an active ingredient has new invoice and quality records to review. And the move of product CALD-201 to a contract manufacturer depends on decisions that are still open in your inbox. To get answers you can trust, you need context from many places, and you need to know which source each answer came from.
 
-The scenario is Caldova, a fictional pharmaceutical company, where you work as a procurement analyst looking into supplier issues: cold-chain guidance on the web, supplier and product data in Fabric, CALD-201 emails in your mailbox, and purchasing policies and agreements in Azure AI Search. Along the way, you check each answer against the source it came from.
+In this lab, you give AI agents that context with Microsoft IQ:
+
+- **Web IQ** finds current public guidance on handling temperature excursions during shipment.
+- **Fabric IQ** answers questions over Caldova's structured data in Microsoft Fabric, such as which products contain an active ingredient and how a supplier's delivery performance is trending.
+- **Work IQ** reads and acts on your Microsoft 365 work as you: the CALD-201 emails, a decision meeting, and a follow-up message.
+- **Foundry IQ** builds a knowledge base over Caldova's purchasing policy and supplier documents to decide whether the 4,800 units can be distributed.
+
+For each IQ, you call it from a Python notebook, and then you add it as an MCP server in the GitHub Copilot app so you can ask it questions from a chat.
 
 ## Sign in to Windows
 
