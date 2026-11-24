@@ -6,7 +6,7 @@ Caldova is a fictional pharmaceutical company. It owns its medicines and relies 
 
 In this lab, you give AI agents that context with Microsoft IQ:
 
-- **Web IQ** finds current public guidance on handling temperature excursions during shipment.
+- **Web IQ** finds real-time guidance from the web on handling temperature excursions during shipment.
 - **Fabric IQ** answers questions over Caldova's structured data in Microsoft Fabric, such as which products contain an active ingredient and how a supplier's delivery performance is trending.
 - **Work IQ** reads and acts on your Microsoft 365 work as you: the CALD-201 emails, a decision meeting, and a follow-up message.
 - **Foundry IQ** builds a knowledge base over Caldova's purchasing policy and supplier documents to decide whether the 4,800 units can be distributed.
@@ -77,9 +77,9 @@ Select **Next** to start **Exercise 1: Web IQ**.
 ===
 # Exercise 1: Web IQ
 
-Web IQ grounds answers in current web content.
+Web IQ grounds answers in real-time web content.
 
-Shipment **SHIP-VC-1026-BOS-FRA** ran above its labelled temperature range. Before the distribution team reviews Caldova's own records, it wants current public guidance on handling temperature excursions. You will call Web IQ through MCP to find that guidance as citable passages.
+Shipment **SHIP-VC-1026-BOS-FRA** ran above its labelled temperature range. Before the distribution team reviews Caldova's own records, it wants real-time guidance from the web on handling temperature excursions. You will call Web IQ through MCP to find that guidance as citable passages.
 
 ## Get your Web IQ key
 
@@ -89,7 +89,7 @@ A Web IQ account was created for you in your resource group. Create an API key f
 2. In the sign-in prompt, select your lab account.
 3. In **Select an Azure Resource**, select your lab subscription for **Azure subscription**, and then select the resource that starts with **ill344-webiq-** for **Resource**. Select **Finish**.
 4. If a dialog invites you to try Web IQ in a playground, select **Skip**.
-5. On the profile management page, scroll to the bottom. Under **Authentication > API Keys**, select **Create API key**. For the name, enter +++ill344-lab+++, and then select **Create**. Copy the new key.
+5. On the profile management page, scroll to the bottom. Under **Authentication > API Keys**, select **Create API key**. For the name, enter +++webiq+++, and then select **Create**. Copy the new key.
 
 Then save the key so the notebook can use it:
 

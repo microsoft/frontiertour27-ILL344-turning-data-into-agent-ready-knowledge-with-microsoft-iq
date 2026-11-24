@@ -3,7 +3,7 @@
 
 You built context-aware AI with Microsoft IQ:
 
-- Web IQ over MCP that grounds answers in current web content.
+- Web IQ over MCP that grounds answers in real-time web content.
 - Fabric IQ over MCP with a Fabric ontology and a Fabric data agent.
 - Work IQ over MCP with your Microsoft 365 email and calendar.
 - A Foundry IQ knowledge base with agentic retrieval over indexed documents.

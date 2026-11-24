@@ -10,7 +10,7 @@
 
 ### Session description
 
-Give agents context with Microsoft IQ. Use Web IQ to ground answers in current web content, Fabric IQ to query structured data in OneLake through an ontology and a data agent, and Work IQ to read and act on Microsoft 365 work context. Then build a Foundry IQ knowledge base with agentic retrieval over enterprise documents. At every step, check which source supports each claim.
+Give agents context with Microsoft IQ. Use Web IQ to ground answers in real-time web content, Fabric IQ to query structured data in OneLake through an ontology and a data agent, and Work IQ to read and act on Microsoft 365 work context. Then build a Foundry IQ knowledge base with agentic retrieval over enterprise documents. At every step, check which source supports each claim.
 
 ### 🚀 Getting started
 
@@ -34,7 +34,7 @@ If you're learning at your own pace:
 
 By the end of this session, you will be able to:
 
-- Ground answers in current web content by calling Web IQ through Model Context Protocol (MCP).
+- Ground answers in real-time web content by calling Web IQ through Model Context Protocol (MCP).
 - Query structured business data with a Fabric IQ ontology, and a Fabric data agent for analytical questions.
 - Use Work IQ tools to ask, retrieve, discover, read, and act on Microsoft 365 work context as the signed-in user.
 - Build a multi-source knowledge base over indexed enterprise content using Foundry IQ (Azure AI Search) agentic retrieval.
