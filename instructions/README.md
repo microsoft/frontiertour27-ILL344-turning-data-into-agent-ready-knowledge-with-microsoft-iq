@@ -5,9 +5,9 @@ These instructions are for participants of the **instructor-led lab** **ILL344: 
 
 ## Lab overview
 
-You are a Caldova procurement analyst investigating supplier risk. Build Foundry IQ knowledge bases over policy and document evidence, add Fabric IQ relationships and Work IQ workplace context, then connect a Microsoft Agent Framework agent. At every stage, verify which source supports the answer.
+You are a Caldova procurement analyst investigating supplier risk. Give agents context with Microsoft IQ: find public guidance with Web IQ, query structured supplier data with Fabric IQ, read and act on your Microsoft 365 work with Work IQ, and build a Foundry IQ knowledge base over policy and document evidence. At every stage, verify which source supports the answer.
 
-Follow the [guided lab instructions](overview.md). Each exercise follows **inspect in the browser > run the notebook > verify the evidence**. The browser activities are part of the lab, not just environment setup.
+Follow the [guided lab instructions](overview.md). Each exercise follows **inspect in the browser > run the notebook > verify the evidence**, then adds the same IQ to the GitHub Copilot app as an MCP server. The browser activities are part of the lab, not just environment setup.
 
 ## Prerequisites
 
@@ -23,21 +23,20 @@ To get the most out of this lab, you should have a basic understanding of the fo
 
 ## Get started
 
-Start with the [environment setup](overview.md#getting-started), then keep the guide open alongside Visual Studio Code:
+Start with the [environment setup](overview.md#sign-in-to-windows), then keep the guide open alongside Visual Studio Code:
 
 | Exercise | Browser activity | Notebook |
 | --- | --- | --- |
-| [1. Foundry IQ knowledge bases](overview.md#exercise-1-build-foundry-iq-knowledge-bases-with-agentic-retrieval) | Inspect PDFs, Search explorer results, and created knowledge bases | [part1-standard-foundry-iq-kb.ipynb](../src/notebooks/part1-standard-foundry-iq-kb.ipynb) |
-| [2. Fabric IQ](overview.md#exercise-2-add-structured-data-from-fabric-iq) | Explore lakehouse tables and the Fabric ontology | [part2-fabric-iq-to-kb.ipynb](../src/notebooks/part2-fabric-iq-to-kb.ipynb) |
-| [3. Work IQ](overview.md#exercise-3-add-workplace-context-from-work-iq) | Read the seeded Outlook emails and an approved purchase order | [part3-work-iq-to-kb.ipynb](../src/notebooks/part3-work-iq-to-kb.ipynb) |
-| [4. Work IQ and Fabric IQ](overview.md#exercise-4-combine-work-iq-and-fabric-iq) | Inspect the combined knowledge base and verify claims in source systems | [part4-work-iq-fabric-iq-to-kb.ipynb](../src/notebooks/part4-work-iq-fabric-iq-to-kb.ipynb) |
-| [5. Microsoft Agent Framework](overview.md#exercise-5-build-an-agent-with-microsoft-agent-framework) | Compare knowledge base configurations and check the shipment evidence | [part5-agent-framework-mcp.ipynb](../src/notebooks/part5-agent-framework-mcp.ipynb) |
+| [1. Web IQ](overview.md#exercise-1-ground-answers-in-the-web-with-web-iq) | Create a Web IQ API key and check a cited web passage on its source page | [part1-web-iq.ipynb](../src/notebooks/part1-web-iq.ipynb) |
+| [2. Fabric IQ](overview.md#exercise-2-query-structured-data-with-fabric-iq) | Explore lakehouse tables and the Fabric ontology, then inspect the data agent you published | [part2-fabric-iq.ipynb](../src/notebooks/part2-fabric-iq.ipynb) |
+| [3. Work IQ](overview.md#exercise-3-bring-in-work-context-with-work-iq) | Read the seeded Outlook emails and the approved purchase order, then check each write in Outlook | [part3-work-iq.ipynb](../src/notebooks/part3-work-iq.ipynb) |
+| [4. Foundry IQ](overview.md#exercise-4-build-a-knowledge-base-with-foundry-iq) | Inspect PDFs, Search explorer results, and created knowledge bases | [part4-foundry-iq.ipynb](../src/notebooks/part4-foundry-iq.ipynb) |
 
-Complete Part 1 before the later notebooks, which reuse its policy file source. After all five exercises, continue to the [summary](summary.md).
+Each notebook stands on its own, but the exercises follow one Caldova investigation, so run them in order. After all four exercises, continue to the [summary](summary.md).
 
 ## Publishing to Skillable
 
-Use **overview.md** for setup and the five exercises, followed by **summary.md** for the wrap-up. Preserve the `===` separators, which start new sidebar pages, and the existing lab credential tokens. The notebooks link back to the same guide for learners outside Skillable.
+Use **overview.md** for setup and the four exercises, followed by **summary.md** for the wrap-up. Preserve the `===` separators, which start new sidebar pages, and the existing lab credential tokens. The notebooks link back to the same guide for learners outside Skillable.
 
 ## Discussions
 

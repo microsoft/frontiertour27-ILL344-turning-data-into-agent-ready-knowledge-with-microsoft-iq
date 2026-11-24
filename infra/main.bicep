@@ -1,6 +1,6 @@
 // ===============================================
 // Bicep template for ILL344 at Microsoft AI Tour
-// Creates: Foundry IQ (Azure AI Search), Microsoft Foundry (with model deployments), Fabric capacity
+// Creates: Foundry IQ (Azure AI Search), Microsoft Foundry (with model deployments), Fabric capacity, Web IQ
 // ===============================================
 
 @description('Principal ID for role assignments (provided by azd)')
@@ -8,6 +8,9 @@ param principalId string
 
 @description('Whether to deploy Fabric capacity')
 param deployFabricCapacity bool = true
+
+@description('Whether to deploy the Web IQ account used in Part 1')
+param deployWebIq bool = true
 
 @description('Deploy temporary Blob Storage used by the Azure AI Search indexing pipeline')
 param deployIndexingStorage bool = false
@@ -443,6 +446,26 @@ output FABRIC_CAPACITY_NAME string = deployFabricCapacity ? fabricCapacity.name 
 
 @description('Fabric capacity resource ID')
 output FABRIC_CAPACITY_ID string = deployFabricCapacity ? fabricCapacity.id : ''
+
+// ===============================================
+// WEB IQ
+// ===============================================
+
+// Inline rather than a module: a module adds a nested deployment, and the Skillable
+// validation step expects exactly one deployment in the resource group.
+// Web IQ accounts are global. Attendees create the API key in the Web IQ portal.
+resource webIq 'Microsoft.WebIQ/accounts@2026-06-01-preview' = if (deployWebIq) {
+  name: '${resourcePrefix}-webiq-${uniqueSuffix}'
+  location: 'global'
+  kind: 'WebIQ.Grounding'
+  sku: {
+    name: 'G3'
+  }
+  properties: {}
+}
+
+@description('Web IQ account name')
+output WEB_IQ_ACCOUNT_NAME string = deployWebIq ? webIq.name : ''
 
 @description('Azure tenant ID for deployment')
 output AZURE_TENANT_ID string = tenant().tenantId
