@@ -35,7 +35,7 @@ If you're learning at your own pace:
 By the end of this session, you will be able to:
 
 - Ground answers in current web content by calling Web IQ through Model Context Protocol (MCP).
-- Query structured business data with a Fabric IQ ontology, and create and publish a Fabric data agent for analytical questions.
+- Query structured business data with a Fabric IQ ontology, and a Fabric data agent for analytical questions.
 - Use Work IQ tools to ask, retrieve, discover, read, and act on Microsoft 365 work context as the signed-in user.
 - Build a multi-source knowledge base over indexed enterprise content using Foundry IQ (Azure AI Search) agentic retrieval.
 

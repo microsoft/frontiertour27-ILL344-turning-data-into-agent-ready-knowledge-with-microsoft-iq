@@ -28,11 +28,11 @@ Sign in to the virtual machine with these credentials:
 Your Azure resources, search indexes, Fabric items, Work IQ app registration, and sample emails are already created for you.
 
 1. In Visual Studio Code, select **Terminal > New Terminal**.
-2. Run this command to show the MCP server URL that setup saved for you:
+2. Run this command to show the MCP server URLs that setup saved for you:
 
     +++Get-Content .env | Select-String "MCP_URL"+++
 
-    You should see **FABRIC_ONTOLOGY_MCP_URL**. If it's missing, let a proctor know. You get the other MCP server details during the exercises.
+    You should see three lines: **FOUNDRY_IQ_MCP_URL**, **FABRIC_ONTOLOGY_MCP_URL**, and **FABRIC_DATA_AGENT_MCP_URL**. If any are missing, let a proctor know.
 
 ### Sign in to the Azure portal
 
@@ -125,40 +125,38 @@ Once you have completed the notebook, select **Next** to continue to **Exercise 
 ===
 # Exercise 2: Query structured data with Fabric IQ
 
-Caldova's procurement team has found Meridian API Works invoice and quality evidence for lot **AUR-API-7**, which contains Caldovexine (**SUB-001**). The team needs two kinds of structured answers: which products and manufacturers are related to the substance, and how Meridian API Works' delivery performance is trending. You will query the Fabric IQ ontology through MCP, then create and publish a Fabric data agent for the trend questions.
+Caldova's procurement team has found Meridian API Works invoice and quality evidence for lot **AUR-API-7**, which contains Caldovexine (**SUB-001**). The team needs two kinds of structured answers: which products and manufacturers are related to the substance, and how Meridian API Works' delivery performance is trending. You will query the Fabric IQ ontology and a Fabric data agent through MCP.
 
 ## Explore the Fabric data
 
 1. In the browser, go to +++https://app.fabric.microsoft.com+++ and sign in with your lab account.
-2. Select **Workspaces** and open the workspace whose name starts with **CaldovaSupplyChain-**. If several are listed, match its workspace ID in the browser URL to **FABRIC_WORKSPACE_ID** in `.env`.
+2. Select **Workspaces** and open the workspace whose name starts with **CaldovaSupplyChain-**. If several are listed, match its workspace ID in the browser URL to **FABRIC_WORKSPACE_ID** in **.env**.
 3. Open **CaldovaSupplierAnalytics**, then expand **Schemas > dbo > Tables**. Preview **ActiveSubstance**, **MedicinalProduct**, and **ProductActiveSubstance**. Find **SUB-001** in the substance table and follow its ID through the linking table to a product.
 4. Preview **DimSupplier** and **SupplierPerformance**. Find the **SupplierID** for Meridian API Works and look at a few of its weekly rows. Notice the **OTIF12moPct** and **BatchRejectionRatePct** columns.
 5. Return to the workspace and open **CaldovaMedicinalProductOntology**. Inspect **MedicinalProduct**, **ActiveSubstance**, and **Manufacturer**, and the **contains** and **manufactures** relationships. The ontology gives business meaning to the table relationships.
+6. Return to the workspace and open **CaldovaSupplierDataAgent**. In the **Explorer** pane, expand **CaldovaSupplierAnalytics** and see which tables are selected. Open the agent's instructions to see how it should join the tables and present the metrics. The data agent answers analytical questions over these tables in natural language.
 
 **Trace the relationship:** Use **ProductActiveSubstance** to connect **SUB-001** to a medicinal product. Keep that relationship and Meridian API Works' rows available to compare with the notebook's answers.
 
 ## Call Fabric IQ from the notebook
 
-Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 8** in order, signing in with the same lab account when prompted.
+Open **src/notebooks/part2-fabric-iq.ipynb** and run **Steps 1 to 6** in order, signing in with the same lab account when prompted.
 
 If the browser sign-in window is hidden, minimize other windows **inside the virtual machine**. Keep the outer browser hosting Skillable open.
 
-- **Steps 2 and 3** call the ontology's MCP endpoint. The `ask_ontology` answer takes 30 to 60 seconds.
-- **Steps 4 to 6** create **CaldovaSupplierDataAgent** with the Fabric REST API, select the supplier analytics tables, add instructions, and publish it.
-- **Steps 7 and 8** call the published data agent's MCP endpoint with ranking and trend questions.
+- **Steps 2 and 3** call the ontology's MCP endpoint. The **ask_ontology** answer takes 30 to 60 seconds.
+- **Steps 4 to 6** call the data agent's MCP endpoint with ranking and trend questions.
 
-## Verify what you built
+## Verify the answers
 
-1. Return to your Fabric workspace and refresh it. Open **CaldovaSupplierDataAgent**.
-2. In the **Explorer** pane, expand **CaldovaSupplierAnalytics** and confirm that only the supplier analytics tables are selected. Open the agent's instructions and compare them with the notebook.
-3. Open a deep link from the notebook's answer, inspect the generated query, and compare Meridian API Works' latest values with the **SupplierPerformance** rows you previewed.
-4. Compare the ontology's product answer with the **SUB-001** relationship you traced in the lakehouse.
+1. Open a deep link from the data agent's answer, inspect the generated query, and compare Meridian API Works' latest values with the **SupplierPerformance** rows you previewed.
+2. Compare the ontology's product answer with the **SUB-001** relationship you traced in the lakehouse.
 
 ## Use Fabric IQ in the GitHub Copilot app
 
 Add two MCP servers, one for the ontology and one for the data agent. Both sign you in with your Microsoft Entra account, so they don't need headers.
 
-In Visual Studio Code, open the **.env** file in the lab folder and find **FABRIC_ONTOLOGY_MCP_URL** and **FABRIC_DATA_AGENT_MCP_URL**. The notebook added the second one in Step 6. Keep the file open so you can switch back to it when each URL is needed.
+In Visual Studio Code, open the **.env** file in the lab folder and find **FABRIC_ONTOLOGY_MCP_URL** and **FABRIC_DATA_AGENT_MCP_URL**. Keep the file open so you can switch back to it when each URL is needed.
 
 1. In the GitHub Copilot app, select **Customize**, and then select **Add > MCP Server...**.
 2. Enter these values, and then select **Add server**:
@@ -211,9 +209,9 @@ Caldova's supply team has recent emails about Summit Dose equipment mapping, sub
 
 Open **src/notebooks/part3-work-iq.ipynb**. Run **Steps 1 to 8**, signing in with the lab account when prompted. These steps only read data.
 
-- **Step 3** uses `ask` for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
-- **Step 4** uses `retrieve` for the cited passages behind that answer.
-- **Steps 5 to 8** use `discover`, `search_paths`, `get_schema`, `fetch`, and `list_agents`.
+- **Step 3** uses **ask** for a synthesized answer and a follow-up in the same conversation. Allow 30 to 60 seconds for each answer.
+- **Step 4** uses **retrieve** for the cited passages behind that answer.
+- **Steps 5 to 8** use **discover**, **search_paths**, **get_schema**, **fetch**, and **list_agents**.
 
 ## Act on your behalf
 
@@ -222,7 +220,7 @@ The remaining cells **change real data in your lab mailbox and calendar without 
 1. Run **Step 9** to create the decision meeting. In Outlook, open **Calendar** and go to tomorrow. Find **CALD-201: decide on the weekend coating slot**, a 30-minute event at 15:00 UTC (Outlook shows it in your local time zone), and open it to see the agenda.
 2. Run **Step 10** to update the meeting and check your reminders. Refresh the calendar and confirm that the subject now ends with **and change control** and that the event is 45 minutes long.
 3. Run **Step 11** to send the follow-up. In Outlook, open your **Inbox** and find **CALD-201 follow-up: weekend coating slot decision** with the purchase order attached. It can take a minute to arrive. You can also find it in **Sent Items**.
-4. Run **Step 12** to download the attachment from Sent Items with `fetch_blob` and confirm that it matches the file on disk.
+4. Run **Step 12** to download the attachment from Sent Items with **fetch_blob** and confirm that it matches the file on disk.
 5. Run **Step 13** to delete the meeting. Refresh the calendar and confirm that the event is gone.
 
 When resuming after a kernel restart, run **Steps 1 and 2** to sign in again, then check Outlook to see which actions have completed before continuing. If a write fails with a policy error, ask a proctor.
@@ -286,7 +284,7 @@ Then work through **Steps 6 to 9** to connect both existing indexes and create *
 
 1. Return to your Azure AI Search service. Select **Agentic retrieval > Knowledge bases** and refresh the list.
 2. Find **caldova-policy-knowledge-base** and **caldova-supply-chain-knowledge-base**. Inspect their knowledge sources. The first uses the policy file. The second uses that file plus **supplier-evidence-knowledge-source** and **sourcing-documents-knowledge-source**.
-3. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A `blob_path` is citation metadata and might not be a directly accessible link.
+3. Compare one cited shipment claim with the PDF you opened. Use the reference's title and page numbers to find the evidence. A **blob_path** is citation metadata and might not be a directly accessible link.
 
 ## Use Foundry IQ in the GitHub Copilot app
 
@@ -296,7 +294,7 @@ The knowledge base MCP endpoint uses a Search query key. First find the key in t
 2. Search for +++ill344-search+++ in the top search bar, and open the Azure AI Search service in your resource group.
 3. Select **Security + networking > Keys**, and locate a key under **Manage query keys**. Keep this page open.
 
-In **part4-foundry-iq.ipynb**, run the cell under **Get the knowledge base MCP URL** and keep the printed URL available. You will switch between the app, Visual Studio Code, and the portal to copy and paste each value when it is needed.
+In Visual Studio Code, open the **.env** file in the lab folder and find **FOUNDRY_IQ_MCP_URL**. It points to **caldova-supply-chain-knowledge-base**, which you created in the notebook. Keep the file open. You will switch between the app, Visual Studio Code, and the portal to copy and paste each value when it is needed.
 
 Then add the MCP server:
 
@@ -304,7 +302,7 @@ Then add the MCP server:
 2. Enter these values:
     - **Server name**: +++foundry-iq+++
     - **Server type**: HTTP
-    - **URL**: switch to Visual Studio Code, copy the complete URL printed by the notebook, and switch back to the app to paste it.
+    - **URL**: switch to Visual Studio Code, copy the complete **FOUNDRY_IQ_MCP_URL** value from **.env**, and switch back to the app to paste it. Copy only the URL after the first **=**, without surrounding quotes.
 3. Select **Add header**, and enter the name +++api-key+++. Switch to the Azure portal's **Keys** page, copy a key under **Manage query keys**, and switch back to the app to paste it as the header value.
 4. Select **Add server**, and then switch to the **Installed** tab. Under **MCP Servers**, confirm that the server is toggled on and has a green check mark.
 

@@ -19,11 +19,15 @@ $repoRoot = "C:\Users\LabUser\Desktop\aitour-ILL344"
 $knowledgeFolder = Join-Path $repoRoot "src\notebooks"
 $infraFolder = Join-Path $repoRoot "infra"
 
+# Part 4 creates this knowledge base. The MCP URL is saved now so the lab can check it during setup.
+$foundryIqMcpUrl = "$($SearchEndpoint.TrimEnd('/'))/knowledgebases/caldova-supply-chain-knowledge-base/mcp?api-version=2026-05-01-preview"
+
 # Create .env content
 $envContent = @"
 # Foundry IQ (Azure AI Search) Configuration
 AZURE_SEARCH_SERVICE_ENDPOINT=$SearchEndpoint
 AZURE_SEARCH_ADMIN_KEY=$SearchAdminKey
+FOUNDRY_IQ_MCP_URL=$foundryIqMcpUrl
 
 # Azure OpenAI Configuration
 AZURE_OPENAI_ENDPOINT=$OpenAIEndpoint
