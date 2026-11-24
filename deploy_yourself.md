@@ -30,8 +30,8 @@ You'll need permissions to:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/microsoft/aitour27-ILL344-turning-data-into-agent-ready-knowledge-with-microsoft-iq.git
-cd aitour27-ILL344-turning-data-into-agent-ready-knowledge-with-microsoft-iq
+git clone https://github.com/microsoft/frontiertour27-ILL344-turning-data-into-agent-ready-knowledge-with-microsoft-iq.git
+cd frontiertour27-ILL344-turning-data-into-agent-ready-knowledge-with-microsoft-iq
 ```
 
 ### 2. Create a Python virtual environment
