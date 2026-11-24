@@ -280,7 +280,7 @@ def add_lab_user(
     if not user_id:
         print(
             "WARNING: no lab user object ID or resolvable UPN; skipping the workspace grant. "
-            "Parts 2 and 4 require the signed-in user to have Fabric workspace access."
+            "Part 2 requires the signed-in user to have Fabric workspace access."
         )
         return
     try:

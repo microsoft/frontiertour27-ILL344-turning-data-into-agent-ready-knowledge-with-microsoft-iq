@@ -140,7 +140,7 @@ if ($fabricCapacityId) {
         if ($fabricExit -eq 0) {
             Log "Fabric Lakehouse setup complete"
         } else {
-            Log "ERROR: Fabric Lakehouse setup FAILED (exit $fabricExit). Parts 2 and 4 require Fabric IQ."
+            Log "ERROR: Fabric Lakehouse setup FAILED (exit $fabricExit). Part 2 requires Fabric IQ."
         }
     } else {
         Log "WARNING: setup-lakehouse.ps1 not found, skipping lakehouse"
@@ -162,7 +162,7 @@ if ($fabricCapacityId) {
 # Provision the per-lab Work IQ Entra app and federated credential (non-fatal).
 # Needs Cloud Application Administrator (or Graph Application.ReadWrite.All,
 # DelegatedPermissionGrant.ReadWrite.All and Directory.Read.All) on the lab service principal.
-# Parts 3 and 4 require this step.
+# Part 3 requires this step.
 $env:AZURE_CLIENT_ID = $clientId
 $env:AZURE_CLIENT_SECRET = $clientSecret
 $env:AZURE_TENANT_ID = $tenantId
@@ -173,7 +173,7 @@ if (-not (Test-Path $workIqPython)) { $workIqPython = "python" }
 Log "Provisioning Work IQ Entra app..."
 & $workIqPython (Join-Path $localInfraPath "create-workiq-entra.py") --apply *>> $logFile
 if ($LASTEXITCODE -ne 0) {
-    Log "WARN: Work IQ Entra setup failed (exit $LASTEXITCODE). Parts 3 and 4 require it."
+    Log "WARN: Work IQ Entra setup failed (exit $LASTEXITCODE). Part 3 requires it."
 } else {
     Log "Work IQ Entra setup complete"
 }

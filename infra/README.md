@@ -4,7 +4,7 @@ Normal attendee deployment restores the committed `supplier-evidence` and `sourc
 
 When Fabric is configured, `create-caldova-lakehouse.py` loads the synchronized Caldova JSON into `CaldovaSupplierAnalytics`, and `create-caldova-ontology.py` creates or updates `CaldovaMedicinalProductOntology`. An existing `FABRIC_WORKSPACE_ID` is reused. Otherwise, deployment creates a workspace on `FABRIC_CAPACITY_ID` and grants the Skillable attendee access. The `CaldovaSupplierDataAgent` Fabric data agent is not provisioned here. Attendees create and publish it in Part 2.
 
-`main.bicep` also deploys a Web IQ account (`core/webiq/webiq.bicep`) for Part 1. Its API key comes from the [Web IQ portal](https://webiq.microsoft.ai/profiles), not from Azure, so attendees create it and add it to `.env` as `WEB_IQ_KEY`. Set the `deployWebIq` parameter to `false` to skip the account.
+`main.bicep` also deploys a Web IQ account (`Microsoft.WebIQ/accounts`) for Part 1. It is defined inline, not as a module, because the Skillable validation step expects exactly one deployment in the resource group. Its API key comes from the [Web IQ portal](https://webiq.microsoft.ai/profiles), not from Azure, so attendees create it and add it to `.env` as `WEB_IQ_KEY`. Set the `deployWebIq` parameter to `false` to skip the account.
 
 ## Refresh the index snapshots
 

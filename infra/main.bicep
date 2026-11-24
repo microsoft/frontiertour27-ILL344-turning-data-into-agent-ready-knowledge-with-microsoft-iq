@@ -451,16 +451,21 @@ output FABRIC_CAPACITY_ID string = deployFabricCapacity ? fabricCapacity.id : ''
 // WEB IQ
 // ===============================================
 
-// Attendees create the API key in the Web IQ portal, so the account exposes no key output.
-module webIq 'core/webiq/webiq.bicep' = if (deployWebIq) {
-  name: 'webiq'
-  params: {
-    name: '${resourcePrefix}-webiq-${uniqueSuffix}'
+// Inline rather than a module: a module adds a nested deployment, and the Skillable
+// validation step expects exactly one deployment in the resource group.
+// Web IQ accounts are global. Attendees create the API key in the Web IQ portal.
+resource webIq 'Microsoft.WebIQ/accounts@2026-06-01-preview' = if (deployWebIq) {
+  name: '${resourcePrefix}-webiq-${uniqueSuffix}'
+  location: 'global'
+  kind: 'WebIQ.Grounding'
+  sku: {
+    name: 'G3'
   }
+  properties: {}
 }
 
 @description('Web IQ account name')
-output WEB_IQ_ACCOUNT_NAME string = webIq.?outputs.?name ?? ''
+output WEB_IQ_ACCOUNT_NAME string = deployWebIq ? webIq.name : ''
 
 @description('Azure tenant ID for deployment')
 output AZURE_TENANT_ID string = tenant().tenantId
